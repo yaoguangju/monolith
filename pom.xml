@@ -6,6 +6,7 @@
     <modules>
         <module>monolith-common</module>
         <module>monolith-complex</module>
+        <module>monolith-leetcode</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
