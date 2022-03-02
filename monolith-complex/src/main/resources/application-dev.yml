@@ -1,0 +1,22 @@
+server:
+  port: 8765
+spring:
+  application:
+    name: test #应用/微服务名字
+  jackson:
+    date-format: yyyy‐MM‐dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://124.70.214.255:3306/mp_test?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    username: root
+    password: 4acf5a70fbb48037
+  redis:
+    database: 9
+    host: 124.70.214.255
+    password: bd9d78
+    port: 6379
+  freemarker:
+    suffix: html
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
