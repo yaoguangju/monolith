@@ -1,2 +1,2 @@
-# springboot
-springboot单体项目示例
+# monolith
+monolith单体项目示例
