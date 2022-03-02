@@ -7,6 +7,10 @@
         <module>monolith-common</module>
         <module>monolith-complex</module>
         <module>monolith-leetcode</module>
+        <module>monolith-jvm</module>
+        <module>monolith-thread</module>
+        <module>monolith-other</module>
+        <module>monolith-common-mp</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
