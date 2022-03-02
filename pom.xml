@@ -10,7 +10,6 @@
         <module>monolith-jvm</module>
         <module>monolith-thread</module>
         <module>monolith-other</module>
-        <module>monolith-common-mp</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -1,0 +1,22 @@
+#默认环境
+spring:
+  profiles: #环境配置文件
+    active: dev #dev开发环境 prd生产环境
+---
+
+spring:
+  profiles: dev
+  application:
+    name: test
+
+---
+spring:
+  profiles: prd  #上线环境配置
+  application:
+    name: test
+
+---
+spring:
+  profiles: dynamic  #多数据源环境配置
+  application:
+    name: test

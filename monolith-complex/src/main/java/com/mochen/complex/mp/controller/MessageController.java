@@ -24,6 +24,7 @@ public class MessageController {
     private TemplateMessageManager templateMessageManager;
 
     /**
+     *  MiniProgramData和url只能选一个
      * 发送模板消息示例(小程序)
      */
     @GetMapping("/send1")
@@ -36,7 +37,6 @@ public class MessageController {
         map.put("keyword1",new WxMpTemplateData("体验课名称"));
         map.put("keyword2",new WxMpTemplateData("体验课"));
         map.put("remark",new WxMpTemplateData("恭喜您，成功报名线下体验课时间"));
-
         WxMpTemplateMessage message = new WxMpTemplateMessage("oT0VQ6FygOFVH9wknVNDBj_woQSg", "AjjpDEwiggAXr6CGLRt-_7tGmttgnH5n7i-J6OB0sYQ",
                  miniProgramData, map);
         final boolean b = templateMessageManager.sendTemplateMessage(message);
@@ -53,7 +53,6 @@ public class MessageController {
         map.put("keyword1",new WxMpTemplateData("体验课名称"));
         map.put("keyword2",new WxMpTemplateData("体验课"));
         map.put("remark",new WxMpTemplateData("恭喜您，成功报名线下体验课时间"));
-
         WxMpTemplateMessage message = new WxMpTemplateMessage("oT0VQ6FygOFVH9wknVNDBj_woQSg", "AjjpDEwiggAXr6CGLRt-_7tGmttgnH5n7i-J6OB0sYQ",
                 "https://www.baidu.com", map);
         final boolean b = templateMessageManager.sendTemplateMessage(message);
