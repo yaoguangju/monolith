@@ -3,7 +3,7 @@ package com.mochen.complex.mp.controller;
 
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.mochen.complex.common.contanst.CommonConstant;
+import com.mochen.complex.validation.common.contanst.CommonConstant;
 import com.mochen.redis.common.manager.RedisManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
-@Controller
+//@Controller
 @RequestMapping("/mp")
 public class AgentController {
 

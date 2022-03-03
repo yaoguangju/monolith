@@ -1,4 +1,4 @@
-package com.mochen.complex.common.contanst;
+package com.mochen.complex.mp.common.contanst;
 
 /**
  * 通用常量

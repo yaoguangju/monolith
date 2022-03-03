@@ -1,5 +1,5 @@
 server:
-  port: 8765
+  port: 10000
 spring:
   application:
     name: test #应用/微服务名字
