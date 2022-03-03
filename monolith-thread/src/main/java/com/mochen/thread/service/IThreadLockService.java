@@ -1,7 +1,7 @@
-package com.mochen.complex.thread.service;
+package com.mochen.thread.service;
 
-import com.mochen.complex.thread.entity.dto.ThreadLockDTO;
-import com.mochen.complex.thread.entity.xdo.ThreadLockDO;
+import com.mochen.thread.entity.dto.ThreadLockDTO;
+import com.mochen.thread.entity.xdo.ThreadLockDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

@@ -1,4 +1,4 @@
-package com.mochen.complex.thread.common.utils;
+package com.mochen.thread.common.utils;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.generator.AutoGenerator;

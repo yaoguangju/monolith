@@ -1,4 +1,4 @@
-package com.mochen.complex.thread.entity.xdo;
+package com.mochen.thread.entity.xdo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

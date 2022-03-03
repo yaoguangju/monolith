@@ -1,6 +1,6 @@
-package com.mochen.complex.thread.mapper;
+package com.mochen.thread.mapper;
 
-import com.mochen.complex.thread.entity.xdo.ThreadLockDO;
+import com.mochen.thread.entity.xdo.ThreadLockDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,10 +1,10 @@
-package com.mochen.complex.thread.service.impl;
+package com.mochen.thread.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.mochen.complex.thread.entity.dto.ThreadLockDTO;
-import com.mochen.complex.thread.entity.xdo.ThreadLockDO;
-import com.mochen.complex.thread.mapper.ThreadLockMapper;
-import com.mochen.complex.thread.service.IThreadLockService;
+import com.mochen.thread.entity.dto.ThreadLockDTO;
+import com.mochen.thread.entity.xdo.ThreadLockDO;
+import com.mochen.thread.mapper.ThreadLockMapper;
+import com.mochen.thread.service.IThreadLockService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;

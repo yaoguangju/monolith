@@ -36,7 +36,6 @@
         <aliyun-java-sdk-core.version>4.5.3</aliyun-java-sdk-core.version>
         <druid-spring-boot-starter.version>1.2.6</druid-spring-boot-starter.version>
         <weixin-java-mp.version>4.2.0</weixin-java-mp.version>
-        <jackson-databind.version>2.13.1</jackson-databind.version>
         <redisson-spring-boot-starter.version>3.16.8</redisson-spring-boot-starter.version>
     </properties>
 
@@ -120,14 +119,7 @@
                 <version>${weixin-java-mp.version}</version>
             </dependency>
 
-            <!-- jackson -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson-databind.version}</version>
-            </dependency>
-
-            <!-- 分布式锁 -->
+            <!-- redisson -->
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
