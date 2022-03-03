@@ -10,6 +10,7 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,6 +34,7 @@ public class ThreadLockServiceImpl extends ServiceImpl<ThreadLockMapper, ThreadL
     private RedissonClient redissonClient;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void testLock(ThreadLockDTO threadLockDTO) {
         RLock rLock = redissonClient.getLock("sendNoticeLock");
         try {
@@ -43,12 +45,9 @@ public class ThreadLockServiceImpl extends ServiceImpl<ThreadLockMapper, ThreadL
                     ThreadLockDO threadLockDOSave = new ThreadLockDO();
                     BeanUtils.copyProperties(threadLockDTO, threadLockDOSave);
                     threadLockMapper.insert(threadLockDOSave);
-                } else {
-                    ThreadLockDO threadLockDO = threadLockDOList.get(0);
-                    BeanUtils.copyProperties(threadLockDTO, threadLockDO);
-                    threadLockMapper.updateById(threadLockDO);
                 }
             }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally{
@@ -61,6 +60,7 @@ public class ThreadLockServiceImpl extends ServiceImpl<ThreadLockMapper, ThreadL
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void testLock1(ThreadLockDTO threadLockDTO) {
         List<ThreadLockDO> threadLockDOList = threadLockMapper.selectList(new QueryWrapper<ThreadLockDO>().lambda()
                 .eq(ThreadLockDO::getName, threadLockDTO.getName()));
@@ -68,10 +68,6 @@ public class ThreadLockServiceImpl extends ServiceImpl<ThreadLockMapper, ThreadL
             ThreadLockDO threadLockDOSave = new ThreadLockDO();
             BeanUtils.copyProperties(threadLockDTO, threadLockDOSave);
             threadLockMapper.insert(threadLockDOSave);
-        } else {
-            ThreadLockDO threadLockDO = threadLockDOList.get(0);
-            BeanUtils.copyProperties(threadLockDTO, threadLockDO);
-            threadLockMapper.updateById(threadLockDO);
         }
 
     }
