@@ -38,7 +38,6 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <!--web-->
-        <!--logback升级到1.2.10,临时解决方案-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
