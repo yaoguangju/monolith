@@ -19,7 +19,7 @@ public class Test1 {
         long start = System.currentTimeMillis();
         t1.start();
         // join时效等够了,会直接r1=10
-        t1.join(1500);
+        t1.join();
         long end = System.currentTimeMillis();
         log.debug("r1: {} r2: {} cost: {}", r1, r2, end - start);
     }
