@@ -37,6 +37,12 @@
             <artifactId>monolith-common-mp</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!--rocketmq-->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>4.9.1</version>
+        </dependency>
     </dependencies>
 
     <build>
