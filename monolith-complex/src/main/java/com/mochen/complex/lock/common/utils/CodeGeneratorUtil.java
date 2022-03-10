@@ -1,4 +1,4 @@
-package com.mochen.thread.common.utils;
+package com.mochen.complex.lock.common.utils;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -66,7 +66,7 @@ public class CodeGeneratorUtil {
     public static PackageConfig packageConfig() {
         return new PackageConfig.Builder()
                 .parent("com.mochen.complex")
-                .moduleName("thread")
+                .moduleName("lock")
                 .entity("entity.xdo")
                 .pathInfo(Collections.singletonMap(OutputFile.mapperXml, new File(System.getProperty("user.dir")) + "/monolith-complex/src/main/resources/mapper"))
                 .build();

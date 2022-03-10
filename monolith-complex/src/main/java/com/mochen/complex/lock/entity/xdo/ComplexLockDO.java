@@ -1,4 +1,4 @@
-package com.mochen.thread.entity.xdo;
+package com.mochen.complex.lock.entity.xdo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -16,12 +16,12 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 姚广举
- * @since 2022-03-02
+ * @since 2022-03-10
  */
 @Data
 @Accessors(chain = true)
-@TableName("thread_lock")
-public class ThreadLockDO implements Serializable {
+@TableName("complex_lock")
+public class ComplexLockDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

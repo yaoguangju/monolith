@@ -1,4 +1,4 @@
-package com.mochen.thread.entity.dto;
+package com.mochen.complex.lock.entity.dto;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import lombok.Data;
  * @since 2022-03-02
  */
 @Data
-public class ThreadLockDTO {
+public class ComplexLockDTO {
 
     private String name;
 
