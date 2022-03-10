@@ -16,12 +16,11 @@ public class StringController {
 
     @GetMapping("/test")
     public Result test(@RequestParam("str") String str){
-        int a = 123;
-        Integer b = 123;
-        Integer c = a/0;
-        Map<String, Object> map = new HashMap<>();
-        map.put("name",str);
-        return Result.success(map);
+        for (int i = 0; i < 100000; i++) {
+
+            String im = new String(str + i);
+        }
+        return Result.success(str);
     }
 
 }
