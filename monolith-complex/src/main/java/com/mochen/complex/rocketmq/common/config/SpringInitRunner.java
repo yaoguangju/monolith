@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 
-@Component
+//@Component
 @Slf4j
 public class SpringInitRunner implements ApplicationRunner {
 
