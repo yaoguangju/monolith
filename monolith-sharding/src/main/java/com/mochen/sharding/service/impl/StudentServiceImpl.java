@@ -25,6 +25,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, StudentDO> im
     @DS("student2020")
     public List<StudentDO> getStudentList() {
         return this.list(new QueryWrapper<StudentDO>()
-                .eq("analysis_no","JN20200101010101").eq("year",2020));
+                .eq("analysis_no","JN20200101010101")
+                .eq("year",2020));
     }
 }
