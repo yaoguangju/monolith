@@ -19,5 +19,8 @@ public class CommonConstant {
     // 泉城e学appSecret
     public static final String MAJOR_APP_SECRET = "ec82068fac8bd07ea7194f7f89becae3";
 
+    // Token过期时间
+    public static final long TOKEN_EXPIRATION = 1000L * 60 * 60 * 24 * 365 * 100;
+
 
 }

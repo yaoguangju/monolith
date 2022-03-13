@@ -23,7 +23,7 @@
     <artifactId>monolith</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>monolith</name>
-    <description>Demo project for Spring Boot</description>
+    <description>monolith project</description>
 
 
     <properties>
@@ -40,20 +40,20 @@
         <redisson-spring-boot-starter.version>3.16.8</redisson-spring-boot-starter.version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>aliyun</id>
-            <name>aliyun</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>aliyun</id>
-            <name>aliyun</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </pluginRepository>
-    </pluginRepositories>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>aliyun</id>-->
+<!--            <name>aliyun</name>-->
+<!--            <url>https://maven.aliyun.com/repository/public</url>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+<!--    <pluginRepositories>-->
+<!--        <pluginRepository>-->
+<!--            <id>aliyun</id>-->
+<!--            <name>aliyun</name>-->
+<!--            <url>https://maven.aliyun.com/repository/public</url>-->
+<!--        </pluginRepository>-->
+<!--    </pluginRepositories>-->
 
     <dependencyManagement>
         <dependencies>

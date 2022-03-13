@@ -43,7 +43,7 @@ public class CodeGeneratorUtil {
      * 数据库连接
      */
     public static DataSourceConfig dataSourceConfig() {
-        return new DataSourceConfig.Builder("jdbc:mysql://120.27.63.0:3306/student2019?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8", "root", "35f3eac33f6f79db")
+        return new DataSourceConfig.Builder("jdbc:mysql://120.27.63.0:3306/analysis?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8", "root", "35f3eac33f6f79db")
                 .typeConvert(new MySqlTypeConvert(){
                     @Override
                     public DbColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType){
