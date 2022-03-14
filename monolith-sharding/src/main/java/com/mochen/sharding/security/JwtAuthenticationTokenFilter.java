@@ -1,4 +1,4 @@
-package com.mochen.sharding.filter;
+package com.mochen.sharding.security;
 
 import com.mochen.redis.common.manager.RedisManager;
 import com.mochen.sharding.security.JwtManager;

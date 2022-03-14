@@ -1,8 +1,8 @@
-package com.mochen.sharding.config;
+package com.mochen.sharding.common.config;
 
 
-import com.mochen.sharding.filter.DynamicDatasourceFilter;
-import com.mochen.sharding.filter.JwtAuthenticationTokenFilter;
+import com.mochen.sharding.security.DynamicDatasourceFilter;
+import com.mochen.sharding.security.JwtAuthenticationTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

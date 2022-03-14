@@ -1,4 +1,4 @@
-package com.mochen.sharding.config;
+package com.mochen.sharding.common.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

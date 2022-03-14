@@ -6,14 +6,10 @@ import cn.hutool.jwt.signers.JWTSigner;
 import cn.hutool.jwt.signers.JWTSignerUtil;
 import com.mochen.core.exception.CommonException;
 import com.mochen.sharding.common.contanst.CommonConstant;
-import com.mochen.sharding.config.JwtConfig;
+import com.mochen.sharding.common.config.JwtConfig;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
 @Component
 public class JwtManager {
