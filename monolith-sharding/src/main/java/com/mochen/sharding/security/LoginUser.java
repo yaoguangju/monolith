@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
-public class SecurityUser implements UserDetails {
+public class LoginUser implements UserDetails {
 
     private UserDO user;
 
     //存储权限信息
     private List<String> permissions;
 
-    public SecurityUser(UserDO user, List<String> list) {
+    public LoginUser(UserDO user, List<String> list) {
         this.user = user;
         this.permissions = list;
     }

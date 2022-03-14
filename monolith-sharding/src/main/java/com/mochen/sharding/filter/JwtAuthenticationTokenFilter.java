@@ -2,7 +2,7 @@ package com.mochen.sharding.filter;
 
 import com.mochen.redis.common.manager.RedisManager;
 import com.mochen.sharding.security.JwtManager;
-import com.mochen.sharding.security.SecurityUser;
+import com.mochen.sharding.security.LoginUser;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -47,14 +47,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         //从redis中获取用户信息
         String redisKey = "login:" + userid;
 
-        SecurityUser securityUser = redisManager.getCacheObject(redisKey);
-        if(Objects.isNull(securityUser)){
+        LoginUser loginUser = redisManager.getCacheObject(redisKey);
+        if(Objects.isNull(loginUser)){
             throw new RuntimeException("用户未登录");
         }
         //存入SecurityContextHolder
         //TODO 获取权限信息封装到Authentication中
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(securityUser, null, securityUser.getAuthorities());
+                new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         //放行
         filterChain.doFilter(request, response);

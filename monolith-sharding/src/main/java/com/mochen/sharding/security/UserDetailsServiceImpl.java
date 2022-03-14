@@ -51,7 +51,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         //TODO 根据用户查询权限信息 添加到LoginUser中
         List<String> list = new ArrayList<>(Collections.singletonList(userDO.getRole()));
 
-        return new SecurityUser(userDO,list);
+        return new LoginUser(userDO,list);
 
     }
 

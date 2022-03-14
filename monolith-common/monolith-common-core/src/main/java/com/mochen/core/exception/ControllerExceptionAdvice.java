@@ -19,48 +19,42 @@ import java.util.List;
 @ControllerAdvice
 public class ControllerExceptionAdvice {
 
-    @ExceptionHandler(value =Exception.class)
+    @ExceptionHandler(value =CommonException.class)
     @ResponseBody
-    public Result exceptionHandler(Exception e){
-        // 自定义异常
-        if(e instanceof CommonException){
-            CommonException commonException = (CommonException) e;
-            return new Result(commonException.getCode(),commonException.getMessage());
-        }
-        // 参数校验异常
-        else if(e instanceof BindException){
-            BindException bindException = (BindException) e;
-            BindingResult result = bindException.getBindingResult();
-            StringBuilder errorMsg = new StringBuilder();
-
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            fieldErrors.forEach(error -> {
-                errorMsg.append(error.getDefaultMessage()).append("!");
-            });
-            return new Result(ExceptionEnum.PARAM_ERROR.getCode(),String.valueOf(errorMsg));
-        }
-        // 参数校验异常
-        else if(e instanceof MethodArgumentNotValidException){
-            MethodArgumentNotValidException methodArgumentNotValidException = (MethodArgumentNotValidException) e;
-            BindingResult result = methodArgumentNotValidException.getBindingResult();
-            StringBuilder errorMsg = new StringBuilder();
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            fieldErrors.forEach(error -> {
-                errorMsg.append(error.getDefaultMessage()).append("!");
-            });
-            return new Result(ExceptionEnum.PARAM_ERROR.getCode(),String.valueOf(errorMsg));
-        }
-        // 参数校验异常
-        else if(e instanceof ConstraintViolationException){
-            ConstraintViolationException constraintViolationException = (ConstraintViolationException) e;
-            return new Result(ExceptionEnum.PARAM_ERROR.getCode(),String.valueOf(constraintViolationException.getMessage()));
-        }
-        // 其他异常
-        else {
-            return new Result(ExceptionEnum.SYSTEM_EXCEPTION.getCode(),String.valueOf(e.getMessage()));
-        }
+    public Result commonExceptionHandler(CommonException e){
+        return new Result(e.getCode(), e.getMessage());
     }
 
+    @ExceptionHandler(value =BindException.class)
+    @ResponseBody
+    public Result commonBindExceptionHandler(BindException e){
+        BindingResult result = e.getBindingResult();
+            StringBuilder errorMsg = new StringBuilder();
+
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            fieldErrors.forEach(error -> {
+                errorMsg.append(error.getDefaultMessage()).append("!");
+            });
+            return new Result(ExceptionEnum.PARAM_ERROR.getCode(),String.valueOf(errorMsg));
+    }
+
+    @ExceptionHandler(value =MethodArgumentNotValidException.class)
+    @ResponseBody
+    public Result commonMethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e){
+        BindingResult result = e.getBindingResult();
+            StringBuilder errorMsg = new StringBuilder();
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            fieldErrors.forEach(error -> {
+                errorMsg.append(error.getDefaultMessage()).append("!");
+            });
+            return new Result(ExceptionEnum.PARAM_ERROR.getCode(),String.valueOf(errorMsg));
+    }
+
+    @ExceptionHandler(value =ConstraintViolationException.class)
+    @ResponseBody
+    public Result commonConstraintViolationExceptionHandler(ConstraintViolationException e){
+        return new Result(ExceptionEnum.PARAM_ERROR.getCode(),String.valueOf(e.getMessage()));
+    }
 
 
 }

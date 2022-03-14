@@ -8,7 +8,7 @@ import com.mochen.sharding.entity.vo.LoginVO;
 import com.mochen.sharding.entity.xdo.UserDO;
 import com.mochen.sharding.mapper.UserMapper;
 import com.mochen.sharding.security.JwtManager;
-import com.mochen.sharding.security.SecurityUser;
+import com.mochen.sharding.security.LoginUser;
 import com.mochen.sharding.service.IUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -59,21 +59,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),loginDTO.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 
-        if(Objects.isNull(authenticate)){
-            throw new CommonException("用户名或密码错误");
-        }
+//        if(Objects.isNull(authenticate)){
+//            throw new CommonException("用户名或密码错误");
+//        }
         //使用userid生成token
-        SecurityUser securityUser = (SecurityUser) authenticate.getPrincipal();
-        Long userId = securityUser.getUser().getId();
-        Long year = securityUser.getUser().getYear();
+        LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
+        Long userId = loginUser.getUser().getId();
+        Long year = loginUser.getUser().getYear();
 
         String token = jwtManager.createToken(userId,year);
-        redisManager.setCacheObject("login:"+ userId,securityUser);
+        redisManager.setCacheObject("login:"+ userId, loginUser);
         //封装前端对象
         LoginVO loginVO = new LoginVO();
         loginVO.setToken(token);
         LoginVO.UserVO userVO = new LoginVO.UserVO();
-        BeanUtils.copyProperties(securityUser.getUser(),userVO);
+        BeanUtils.copyProperties(loginUser.getUser(),userVO);
         loginVO.setUserVO(userVO);
 
         return loginVO;
@@ -82,8 +82,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     @Override
     public void logout() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-        Long userid = securityUser.getUser().getId();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long userid = loginUser.getUser().getId();
         redisManager.deleteObject("login:"+userid);
     }
 

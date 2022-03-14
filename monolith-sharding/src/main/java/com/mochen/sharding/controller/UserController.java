@@ -39,11 +39,5 @@ public class UserController {
         userService.logout();
         return Result.success();
     }
-
-    @PostMapping("/createPassword")
-    public Result createPassword() throws CommonException {
-        userService.createPassword();
-        return Result.success();
-    }
 }
 

@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,16 +19,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import javax.annotation.Resource;
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Resource
+    private DynamicDatasourceFilter dynamicDatasourceFilter;
 
     @Resource
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
-
-    @Resource
-    private DynamicDatasourceFilter datasourceFilter;
 
     @Resource
     private AuthenticationEntryPoint authenticationEntryPoint;
@@ -46,7 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-
         http
             //关闭csrf(前后端分离项目天生防跨域攻击)
             .csrf().disable()
@@ -60,13 +56,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest().authenticated();
 
         //把多数据源添加到过滤器链中
-        http.addFilterBefore(datasourceFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(dynamicDatasourceFilter, UsernamePasswordAuthenticationFilter.class);
         //把token校验过滤器添加到过滤器链中
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         // 自定义认证过程异常和授权过程中异常的处理
-        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).
-                accessDeniedHandler(accessDeniedHandler);
+        http.exceptionHandling()
+                //配置认证失败处理器
+                .authenticationEntryPoint(authenticationEntryPoint)
+                //配置授权失败处理器
+                .accessDeniedHandler(accessDeniedHandler);
 
 
         //允许跨域

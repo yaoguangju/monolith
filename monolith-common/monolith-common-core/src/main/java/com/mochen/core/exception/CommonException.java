@@ -10,7 +10,7 @@ import lombok.Getter;
  * @since 2020-12-21
  */
 @Getter
-public class CommonException extends Exception {
+public class CommonException extends RuntimeException {
     private final Integer code;
     private String msg;
 
