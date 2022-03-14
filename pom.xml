@@ -10,7 +10,7 @@
         <module>monolith-jvm</module>
         <module>monolith-thread</module>
         <module>monolith-other</module>
-        <module>monolith-sharding</module>
+        <module>monolith-edudata</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
