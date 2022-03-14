@@ -23,12 +23,13 @@ public class PasswordEncoderTests {
     @Test
     public void testCreatePassword(){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String s = passwordEncoder.encode("123");
-        log.info("生成的密文密码为，{}",s);
+        String s = passwordEncoder.encode("916088");
+        String s1 = passwordEncoder.encode("916089");
+        String s2 = passwordEncoder.encode("916090");
+        log.info("生成的密文密码为,{},{},{}",s,s1,s2);
     }
 
     @Test
-    @DS("analysis")
     public void testCreatePasswordToDataBase(){
         List<UserDO> userDOList = userMapper.selectList(null);
         userDOList.forEach(UserDO -> {
@@ -37,8 +38,6 @@ public class PasswordEncoderTests {
 
     }
 
-    @Async("asyncServiceExecutor")
-    @DS("analysis")
     void createPassword(Long id){
         UserDO userDO = userMapper.selectById(id);
         String analysisNo = userDO.getAnalysisNo();

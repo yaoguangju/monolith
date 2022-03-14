@@ -1,6 +1,7 @@
 package com.mochen.sharding.config;
 
 
+import com.mochen.sharding.filter.DatasourceFilter;
 import com.mochen.sharding.filter.JwtAuthenticationTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+
+    @Resource
+    private DatasourceFilter datasourceFilter;
 
     @Resource
     private AuthenticationEntryPoint authenticationEntryPoint;
@@ -56,6 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // 除上面外的所有请求全部需要鉴权认证
             .anyRequest().authenticated();
 
+        //把多数据源添加到过滤器链中
+        http.addFilterBefore(datasourceFilter, UsernamePasswordAuthenticationFilter.class);
         //把token校验过滤器添加到过滤器链中
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 

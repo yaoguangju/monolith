@@ -6,8 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -35,10 +33,22 @@ public class UserDO implements Serializable {
     private String analysisNo;
 
     /**
+     * 手机号
+     */
+    @TableField("phone")
+    private String phone;
+
+    /**
      * 密码
      */
     @TableField("password")
     private String password;
+
+    /**
+     * 角色
+     */
+    @TableField("role")
+    private String role;
 
     /**
      * 姓名

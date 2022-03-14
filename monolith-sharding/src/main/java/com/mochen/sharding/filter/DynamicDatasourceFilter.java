@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Slf4j
-@WebFilter(filterName = "dsFilter", urlPatterns = {"/*"})
+//@WebFilter(filterName = "dsFilter", urlPatterns = {"/*"})
 public class DynamicDatasourceFilter implements Filter {
 
     @Override

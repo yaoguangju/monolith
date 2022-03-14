@@ -1,7 +1,6 @@
 package com.mochen.sharding.security;
 
 
-import com.mochen.sharding.entity.xdo.UserDO;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +13,13 @@ import java.util.Collection;
 @Accessors(chain = true)
 public class SecurityUser implements UserDetails {
 
-    private UserDO userDO;
+    private Long id;
+    private String username;
+    private String password;
+    private String role;
+    private String name;
+    private Long schoolId;
+    private Long year;
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -25,12 +30,12 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userDO.getAnalysisNo();
+        return username;
     }
 
     @Override
     public String getPassword() {
-        return userDO.getPassword();
+        return password;
     }
 
 

@@ -38,9 +38,29 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         SecurityUser securityUser = new SecurityUser();
 
         QueryWrapper<UserDO> wrapper = new QueryWrapper<>();
-        wrapper.eq("analysis_no", username);
-        UserDO userDO = userMapper.selectOne(wrapper);
-        securityUser.setUserDO(userDO);
+        if(username.startsWith("JN")){
+            wrapper.eq("analysis_no", username);
+            UserDO userDO = userMapper.selectOne(wrapper);
+            securityUser.setId(userDO.getId());
+            securityUser.setUsername(userDO.getAnalysisNo());
+            securityUser.setPassword(userDO.getPassword());
+            securityUser.setRole(userDO.getRole());
+
+            securityUser.setName(userDO.getName());
+            securityUser.setSchoolId(userDO.getSchoolId());
+            securityUser.setYear(userDO.getYear());
+        }else {
+            wrapper.eq("phone", username);
+            UserDO userDO = userMapper.selectOne(wrapper);
+            securityUser.setId(userDO.getId());
+            securityUser.setUsername(userDO.getPhone());
+            securityUser.setPassword(userDO.getPassword());
+            securityUser.setRole(userDO.getRole());
+
+            securityUser.setName(userDO.getName());
+            securityUser.setSchoolId(userDO.getSchoolId());
+            securityUser.setYear(userDO.getYear());
+        }
         return securityUser;
 
     }

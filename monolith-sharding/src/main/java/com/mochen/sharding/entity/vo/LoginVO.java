@@ -10,8 +10,7 @@ public class LoginVO {
     @Data
     public static class UserVO{
         private Long id;
-        private String analysisNo;
-        private String password;
+        private String username;
         private String name;
         private Long schoolId;
         private Long year;

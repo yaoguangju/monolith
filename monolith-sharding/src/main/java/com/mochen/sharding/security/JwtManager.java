@@ -22,12 +22,13 @@ public class JwtManager {
     @Resource
     private JwtConfig jwtConfig;
 
-    public String createToken(Long userId) {
+    public String createToken(Long userId,Long year) {
         String jwtSecret = jwtConfig.getJwtSecret();
         JWTSigner signer = JWTSignerUtil.hs256(jwtSecret.getBytes());
 
         return JWT.create()
                 .setPayload("uid", userId)
+                .setPayload("year", year)
                 .setPayload("expire_time", System.currentTimeMillis() + CommonConstant.TOKEN_EXPIRATION)
                 .sign(signer);
     }
