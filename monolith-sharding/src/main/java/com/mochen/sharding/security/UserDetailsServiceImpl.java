@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <p>
@@ -35,33 +38,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SecurityUser securityUser = new SecurityUser();
 
         QueryWrapper<UserDO> wrapper = new QueryWrapper<>();
+        UserDO userDO = new UserDO();
         if(username.startsWith("JN")){
             wrapper.eq("analysis_no", username);
-            UserDO userDO = userMapper.selectOne(wrapper);
-            securityUser.setId(userDO.getId());
-            securityUser.setUsername(userDO.getAnalysisNo());
-            securityUser.setPassword(userDO.getPassword());
-            securityUser.setRole(userDO.getRole());
-
-            securityUser.setName(userDO.getName());
-            securityUser.setSchoolId(userDO.getSchoolId());
-            securityUser.setYear(userDO.getYear());
+            userDO = userMapper.selectOne(wrapper);
         }else {
             wrapper.eq("phone", username);
-            UserDO userDO = userMapper.selectOne(wrapper);
-            securityUser.setId(userDO.getId());
-            securityUser.setUsername(userDO.getPhone());
-            securityUser.setPassword(userDO.getPassword());
-            securityUser.setRole(userDO.getRole());
-
-            securityUser.setName(userDO.getName());
-            securityUser.setSchoolId(userDO.getSchoolId());
-            securityUser.setYear(userDO.getYear());
+            userDO = userMapper.selectOne(wrapper);
         }
-        return securityUser;
+        //TODO 根据用户查询权限信息 添加到LoginUser中
+        List<String> list = new ArrayList<>(Collections.singletonList(userDO.getRole()));
+
+        return new SecurityUser(userDO,list);
 
     }
 

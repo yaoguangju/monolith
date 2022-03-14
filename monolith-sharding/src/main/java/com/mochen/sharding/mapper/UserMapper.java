@@ -1,7 +1,7 @@
 package com.mochen.sharding.mapper;
 
-import com.mochen.sharding.entity.xdo.UserDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mochen.sharding.entity.xdo.UserDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

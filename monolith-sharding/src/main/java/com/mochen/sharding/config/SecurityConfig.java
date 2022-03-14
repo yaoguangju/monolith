@@ -1,7 +1,7 @@
 package com.mochen.sharding.config;
 
 
-import com.mochen.sharding.filter.DatasourceFilter;
+import com.mochen.sharding.filter.DynamicDatasourceFilter;
 import com.mochen.sharding.filter.JwtAuthenticationTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     @Resource
-    private DatasourceFilter datasourceFilter;
+    private DynamicDatasourceFilter datasourceFilter;
 
     @Resource
     private AuthenticationEntryPoint authenticationEntryPoint;
@@ -54,9 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            // 对于登录接口 允许匿名访问
+            // 对于登录接口 允许匿名访问(不加权限)
             .antMatchers("/user/login").anonymous()
-            .antMatchers("/user/createPassword").anonymous()
             // 除上面外的所有请求全部需要鉴权认证
             .anyRequest().authenticated();
 
@@ -70,6 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 accessDeniedHandler(accessDeniedHandler);
 
 
+        //允许跨域
+        http.cors();
     }
 
 

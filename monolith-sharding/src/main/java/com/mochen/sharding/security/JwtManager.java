@@ -1,6 +1,5 @@
 package com.mochen.sharding.security;
 
-import cn.eduplatform.core.common.enums.ExceptionEnum;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
 import cn.hutool.jwt.signers.JWTSigner;
@@ -28,7 +27,6 @@ public class JwtManager {
 
         return JWT.create()
                 .setPayload("uid", userId)
-                .setPayload("year", year)
                 .setPayload("expire_time", System.currentTimeMillis() + CommonConstant.TOKEN_EXPIRATION)
                 .sign(signer);
     }
@@ -39,15 +37,6 @@ public class JwtManager {
         return Long.valueOf(jwt.getPayload("uid").toString());
     }
 
-
-    public Long getUserIdByRequest() throws CommonException {
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
-                .getRequest();
-        String token = request.getHeader("token");
-        this.checkJWT(token);
-        JWT jwt = JWTUtil.parseToken(token);
-        return Long.valueOf(jwt.getPayload("uid").toString());
-    }
 
     private void checkJWT(String token) throws CommonException {
         String jwtSecret = jwtConfig.getJwtSecret();

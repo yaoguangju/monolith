@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 授权过程中出翔异常
+ * 授权过程中出现异常
  */
 @Component
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {

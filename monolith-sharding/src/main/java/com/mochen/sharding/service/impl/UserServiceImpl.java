@@ -1,6 +1,6 @@
 package com.mochen.sharding.service.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mochen.core.exception.CommonException;
 import com.mochen.redis.common.manager.RedisManager;
 import com.mochen.sharding.entity.dto.LoginDTO;
@@ -8,12 +8,9 @@ import com.mochen.sharding.entity.vo.LoginVO;
 import com.mochen.sharding.entity.xdo.UserDO;
 import com.mochen.sharding.mapper.UserMapper;
 import com.mochen.sharding.security.JwtManager;
-import com.mochen.sharding.security.LoginRedis;
 import com.mochen.sharding.security.SecurityUser;
 import com.mochen.sharding.service.IUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -67,19 +64,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         }
         //使用userid生成token
         SecurityUser securityUser = (SecurityUser) authenticate.getPrincipal();
-        Long userId = securityUser.getId();
-        Long year = securityUser.getYear();
+        Long userId = securityUser.getUser().getId();
+        Long year = securityUser.getUser().getYear();
 
         String token = jwtManager.createToken(userId,year);
-        //封装用户Redis权限对象,authenticate存入redis
-        LoginRedis loginRedis = new LoginRedis();
-        BeanUtils.copyProperties(securityUser,loginRedis);
-        redisManager.setCacheObject("login:"+ userId,loginRedis);
+        redisManager.setCacheObject("login:"+ userId,securityUser);
         //封装前端对象
         LoginVO loginVO = new LoginVO();
         loginVO.setToken(token);
         LoginVO.UserVO userVO = new LoginVO.UserVO();
-        BeanUtils.copyProperties(securityUser,userVO);
+        BeanUtils.copyProperties(securityUser.getUser(),userVO);
         loginVO.setUserVO(userVO);
 
         return loginVO;
@@ -89,7 +83,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     public void logout() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-        Long userid = securityUser.getId();
+        Long userid = securityUser.getUser().getId();
         redisManager.deleteObject("login:"+userid);
     }
 

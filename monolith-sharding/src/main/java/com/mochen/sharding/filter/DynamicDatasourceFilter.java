@@ -1,34 +1,23 @@
 package com.mochen.sharding.filter;
 
-import cn.hutool.jwt.JWT;
-import cn.hutool.jwt.JWTUtil;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Slf4j
-//@WebFilter(filterName = "dsFilter", urlPatterns = {"/*"})
-public class DynamicDatasourceFilter implements Filter {
-
+@Component
+public class DynamicDatasourceFilter extends OncePerRequestFilter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        log.info("loading filter {}", filterConfig.getFilterName());
-    }
-
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String token = request.getHeader("token");
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String year = request.getHeader("year");
         String dsKey = "analysis";
-        if(StringUtils.isNotBlank(token)){
-            JWT jwt = JWTUtil.parseToken(token);
-            String year = jwt.getPayload("year").toString();
-
+        if(StringUtils.isNotBlank(year)){
             switch(year){
                 case "2019":
                     dsKey =  "student2019";
@@ -39,6 +28,7 @@ public class DynamicDatasourceFilter implements Filter {
                 case "2021":
                     dsKey =  "student2021";
                     break;
+                case "0":
                 default:
                     dsKey =  "analysis";
             }
@@ -47,14 +37,9 @@ public class DynamicDatasourceFilter implements Filter {
         //执行
         try {
             DynamicDataSourceContextHolder.push(dsKey);
-            filterChain.doFilter(servletRequest, servletResponse);
+            filterChain.doFilter(request, response);
         } finally {
             DynamicDataSourceContextHolder.poll();
         }
-    }
-
-    @Override
-    public void destroy() {
-        Filter.super.destroy();
     }
 }

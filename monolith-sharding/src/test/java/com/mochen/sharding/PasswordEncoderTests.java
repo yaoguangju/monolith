@@ -1,12 +1,10 @@
 package com.mochen.sharding;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.mochen.sharding.entity.xdo.UserDO;
 import com.mochen.sharding.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

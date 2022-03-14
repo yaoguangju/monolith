@@ -1,41 +1,64 @@
 package com.mochen.sharding.security;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.mochen.sharding.entity.xdo.UserDO;
 import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Data
-@Accessors(chain = true)
+@NoArgsConstructor
 public class SecurityUser implements UserDetails {
 
-    private Long id;
-    private String username;
-    private String password;
-    private String role;
-    private String name;
-    private Long schoolId;
-    private Long year;
+    private UserDO user;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    //存储权限信息
+    private List<String> permissions;
+
+    public SecurityUser(UserDO user, List<String> list) {
+        this.user = user;
+        this.permissions = list;
+    }
+
+
+
+
+    //存储SpringSecurity所需要的权限信息的集合
+    @JSONField(serialize = false)
+    private Collection<SimpleGrantedAuthority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        if(authorities!=null){
+            return authorities;
+        }
+        //把permissions中字符串类型的权限信息转换成GrantedAuthority对象存入authorities中
+        authorities = permissions.stream().
+                map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+        return authorities;
     }
 
     @Override
     public String getUsername() {
-        return username;
+        if(StringUtils.isNotBlank(user.getPhone())){
+            return user.getPhone();
+        }
+        return user.getAnalysisNo();
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
 
