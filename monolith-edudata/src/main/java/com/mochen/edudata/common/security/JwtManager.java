@@ -23,6 +23,7 @@ public class JwtManager {
 
         return JWT.create()
                 .setPayload("uid", userId)
+                .setPayload("year", year)
                 .setPayload("expire_time", System.currentTimeMillis() + CommonConstant.TOKEN_EXPIRATION)
                 .sign(signer);
     }
