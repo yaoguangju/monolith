@@ -50,10 +50,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     public LoginVO login(LoginDTO loginDTO) throws CommonException {
 
         // 用户登录前的前置判断，比如验证码等，判断通过后找到需要验证的账号密码
-        // 将用户账号（可能多种类型），密码传入Security系统
+        // 将登录用户账号（可能多种类型），密码传入Security系统
         // Security系统的UserDetailsServiceImpl会调用loadUserByUsername的方法去数据源查询该用户，封装成UserDetails对象
-        // Security系统调用UsernamePasswordAuthenticationToken生成需要验权的user对象
+        // 同时Security系统调用UsernamePasswordAuthenticationToken生成需要验权的user对象
         // 将UserDetails对象和user对象做对比，如果成功便通过
+        // 登录接口将UserDetails的权限存储到redis中
+        // 增加JwtAuthenticationTokenFilter过滤所有的HTTP请求，解析token获取uid，查询用户权限放入authenticationToken中，存储到线程的SecurityContextHolder中
+        // 最终到达controller层
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),loginDTO.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
