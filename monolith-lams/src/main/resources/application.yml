@@ -2,17 +2,17 @@ server:
   port: 10000
 spring:
   application:
-    name: complex #应用名字
+    name: lams #应用名字
   jackson:
     date-format: yyyy‐MM‐dd HH:mm:ss
     time-zone: GMT+8
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://120.27.63.0:3306/monolith?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&rewriteBatchedStatements=true
-    username: monolith
-    password: y3whAM3CtdM2W88A
+    url: jdbc:mysql://120.27.63.0:3306/lams?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    username: root
+    password: 35f3eac33f6f79db
   redis:
-    database: 0
+    database: 2
     host: 120.27.63.0
     password: bd9d78
     port: 6379
@@ -25,3 +25,5 @@ spring:
       max-file-size: 100MB
       # 设置总上传的文件大小
       max-request-size: 200MB
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
