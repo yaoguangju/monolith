@@ -1,5 +1,6 @@
-package com.mochen.lams.room.netty;
+package com.mochen.lams.room.netty.server;
 
+import com.mochen.lams.room.netty.hander.WebSocketHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -39,7 +40,7 @@ public class NettyServer {
                             //以块的方式来写的处理器
                             ch.pipeline().addLast(new ChunkedWriteHandler());
                             ch.pipeline().addLast(new HttpObjectAggregator(8192));
-                            ch.pipeline().addLast(new MyWebSocketHandler());
+                            ch.pipeline().addLast(new WebSocketHandler());
                             ch.pipeline().addLast(new WebSocketServerProtocolHandler("/ws", null, true, 65536 * 10));
                         }
                     });

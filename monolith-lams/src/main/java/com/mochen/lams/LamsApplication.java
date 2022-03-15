@@ -1,6 +1,6 @@
 package com.mochen.lams;
 
-import com.mochen.lams.room.netty.NettyServer;
+import com.mochen.lams.room.netty.server.NettyServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
