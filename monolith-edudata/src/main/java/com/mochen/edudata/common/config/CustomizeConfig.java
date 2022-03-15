@@ -6,7 +6,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Data
-public class JwtConfig {
-    @Value("${jwt.secret}")
+public class CustomizeConfig {
+    @Value("${customize.jwt.secret}")
     private String jwtSecret;
+
+    @Value("${customize.sm4.key}")
+    private String sm4key;
 }

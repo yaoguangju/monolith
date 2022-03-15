@@ -6,7 +6,7 @@ import cn.hutool.jwt.signers.JWTSigner;
 import cn.hutool.jwt.signers.JWTSignerUtil;
 import com.mochen.core.exception.CommonException;
 import com.mochen.edudata.common.contanst.CommonConstant;
-import com.mochen.edudata.common.config.JwtConfig;
+import com.mochen.edudata.common.config.CustomizeConfig;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -15,10 +15,10 @@ import javax.annotation.Resource;
 public class JwtManager {
 
     @Resource
-    private JwtConfig jwtConfig;
+    private CustomizeConfig customizeConfig;
 
     public String createToken(Long userId,Long year) {
-        String jwtSecret = jwtConfig.getJwtSecret();
+        String jwtSecret = customizeConfig.getJwtSecret();
         JWTSigner signer = JWTSignerUtil.hs256(jwtSecret.getBytes());
 
         return JWT.create()
@@ -36,7 +36,7 @@ public class JwtManager {
 
 
     private void checkJWT(String token) throws CommonException {
-        String jwtSecret = jwtConfig.getJwtSecret();
+        String jwtSecret = customizeConfig.getJwtSecret();
         JWTSigner signer = JWTSignerUtil.hs256(jwtSecret.getBytes());
         if(!JWTUtil.verify(token, signer)){
             throw new CommonException("token错误");

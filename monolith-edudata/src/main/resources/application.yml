@@ -2,7 +2,7 @@ server:
   port: 10001
 spring:
   application:
-    name: sharding #应用名字
+    name: edudata #应用名字
   main:
     allow-bean-definition-overriding: true
   jackson:
@@ -13,7 +13,7 @@ spring:
       max-file-size: 100MB
       max-request-size: 200MB
   redis:
-    database: 0
+    database: 1
     host: 120.27.63.0
     password: bd9d78
     port: 6379
@@ -70,8 +70,10 @@ spring:
           username: root
           password: 35f3eac33f6f79db
           type: com.alibaba.druid.pool.DruidDataSource
-
-jwt:
-  secret: 123312322132112621
+customize:
+  jwt:
+    secret: 123312322132112621
+  sm4:
+    key: 1234567890123456
 
 

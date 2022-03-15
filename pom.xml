@@ -11,6 +11,7 @@
         <module>monolith-thread</module>
         <module>monolith-other</module>
         <module>monolith-edudata</module>
+        <module>monolith-lams</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
