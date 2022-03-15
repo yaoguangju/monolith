@@ -70,8 +70,10 @@ spring:
           username: root
           password: 35f3eac33f6f79db
           type: com.alibaba.druid.pool.DruidDataSource
-
-jwt:
-  secret: 123312322132112621
+customize:
+  jwt:
+    secret: 123312322132112621
+  sm4:
+    key: 1234567890123456
 
 
