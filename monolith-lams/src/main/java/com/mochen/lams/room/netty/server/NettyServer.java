@@ -41,7 +41,7 @@ public class NettyServer {
                             ch.pipeline().addLast(new ChunkedWriteHandler());
                             ch.pipeline().addLast(new HttpObjectAggregator(8192));
                             ch.pipeline().addLast(new WebSocketHandler());
-                            ch.pipeline().addLast(new WebSocketServerProtocolHandler("/ws", null, true, 65536 * 10));
+                            ch.pipeline().addLast(new WebSocketServerProtocolHandler("/ws", "", true, 65536 * 10));
                         }
                     });
             ChannelFuture cf = sb.bind().sync(); // 服务器异步创建绑定
