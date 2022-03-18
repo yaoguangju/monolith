@@ -18,7 +18,6 @@ public class Sm4Utils {
         String key = customizeConfig.getSm4key();
         SymmetricCrypto sm4 = SmUtil.sm4(key.getBytes());
         return sm4.decryptStr(stringHex, CharsetUtil.CHARSET_UTF_8);
-
     }
 
 }
