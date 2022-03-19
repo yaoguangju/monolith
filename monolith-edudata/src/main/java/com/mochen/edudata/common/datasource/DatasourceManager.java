@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatasourceManager {
     public static String getDatasource(String year) {
-        String dsKey = "edudata";
+        String dsKey;
         switch(year){
             case "2019":
                 dsKey =  "edudata2019";
