@@ -13,5 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBaseStudentScoreService extends IService<BaseStudentScoreDO> {
 
-    void cacheStudentScore();
+    void cacheStudentScore() throws InterruptedException;
 }

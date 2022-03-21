@@ -42,7 +42,7 @@ public class BaseStudentScoreController {
     }
 
     @GetMapping("/cacheStudentScore")
-    public Result cacheStudentScore(){
+    public Result cacheStudentScore() throws InterruptedException {
         baseStudentScoreService.cacheStudentScore();
         return Result.success();
     }
