@@ -4,6 +4,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 @Component
-@ComponentScan(basePackages = {"cn.eduplatform.mybatis"})
+@ComponentScan(basePackages = {"cn.mochen.mybatis"})
 public class MybatisComponent {
 }

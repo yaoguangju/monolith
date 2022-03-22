@@ -1,4 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    com.mochen.redis.RedisComponent
-
+    com.mochen.thread.ThreadComponent
 
