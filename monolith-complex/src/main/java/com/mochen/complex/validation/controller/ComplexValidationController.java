@@ -3,6 +3,7 @@ package com.mochen.complex.validation.controller;
 
 import com.mochen.complex.validation.entity.dto.ComplexValidationDTO;
 import com.mochen.core.common.xbo.Result;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/complex-validation")
+@Validated
 public class ComplexValidationController {
 
     /**

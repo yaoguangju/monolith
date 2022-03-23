@@ -5,10 +5,12 @@ import com.mochen.complex.thread.entity.xdo.ComplexConcurrentDO;
 import com.mochen.complex.thread.mapper.ComplexConcurrentMapper;
 import com.mochen.complex.thread.service.IComplexConcurrentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.concurrent.Executor;
 
 /**
  * <p>
@@ -24,13 +26,23 @@ public class ComplexConcurrentServiceImpl extends ServiceImpl<ComplexConcurrentM
     @Resource
     private ComplexConcurrentMapper complexConcurrentMapper;
 
-    @Override
-    @Async("asyncServiceExecutor")
-    public void setStudent() {
-        ComplexConcurrentDO complexConcurrentDO = new ComplexConcurrentDO();
-        complexConcurrentDO.setName("小明");
-        complexConcurrentDO.setAge((long) RandomUtil.randomInt(10, 99));
-        complexConcurrentMapper.insert(complexConcurrentDO);
+    @Resource
+    @Qualifier("asyncServiceExecutor")
+    private Executor executor;
 
+    @Override
+//    @Async("asyncServiceExecutor")
+    public void setStudent() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Thread t = Thread.currentThread();
+                System.out.println(t.getName());
+                ComplexConcurrentDO complexConcurrentDO = new ComplexConcurrentDO();
+                complexConcurrentDO.setName("小明");
+                complexConcurrentDO.setAge((long) RandomUtil.randomInt(10, 99));
+                complexConcurrentMapper.insert(complexConcurrentDO);
+            }
+        });
     }
 }

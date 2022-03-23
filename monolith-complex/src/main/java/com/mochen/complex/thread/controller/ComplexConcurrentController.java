@@ -3,6 +3,9 @@ package com.mochen.complex.thread.controller;
 
 import com.mochen.complex.thread.service.IComplexConcurrentService;
 import com.mochen.core.common.xbo.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
 
 
 /**
@@ -24,8 +28,9 @@ import java.util.concurrent.CountDownLatch;
 @RequestMapping("/complex-concurrent")
 public class ComplexConcurrentController {
 
-//    @Resource
-//    private ThreadPoolExecutor threadPoolExecutor;
+//    @Qualifier("taskExecutor")
+//    @Autowired
+//    private Executor executor;
 
     @Resource
     private IComplexConcurrentService complexConcurrentService;
@@ -38,11 +43,14 @@ public class ComplexConcurrentController {
         return Result.success();
     }
 
-    @PostMapping("/testCountDownLatch")
-    public Result testCountDownLatch(){
-        CountDownLatch countDownLatch = new CountDownLatch(9);
-
-        return Result.success();
-    }
+//    @PostMapping("/testCountDownLatch")
+//    public Result testCountDownLatch(){
+//        executor.execute(() -> {
+//            System.out.println("111111111111111111");
+//            Thread t = Thread.currentThread();
+//            System.out.println(t.getName());
+//        });
+//        return Result.success();
+//    }
 }
 

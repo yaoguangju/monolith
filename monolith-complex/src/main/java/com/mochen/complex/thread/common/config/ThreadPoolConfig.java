@@ -49,7 +49,7 @@ public class ThreadPoolConfig implements AsyncConfigurer {
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         // 线程池初始化
         executor.initialize();
-        log.info("线程池初始化......");
+//        log.info("线程池初始化......");
         return executor;
     }
 

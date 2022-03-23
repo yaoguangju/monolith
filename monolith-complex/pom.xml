@@ -37,11 +37,11 @@
             <artifactId>monolith-common-mp</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.mochen</groupId>
-            <artifactId>monolith-common-thread-pool</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.mochen</groupId>-->
+<!--            <artifactId>monolith-common-thread-pool</artifactId>-->
+<!--            <version>1.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
         <!--rocketmq-->
         <dependency>
             <groupId>org.apache.rocketmq</groupId>
