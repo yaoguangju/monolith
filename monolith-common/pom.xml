@@ -21,7 +21,6 @@
         <module>monolith-common-sms</module>
         <module>monolith-common-utils</module>
         <module>monolith-common-mp</module>
-        <module>monolith-common-thread-pool</module>
     </modules>
 
     <properties>
