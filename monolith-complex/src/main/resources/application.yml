@@ -1,22 +1,27 @@
-#默认环境
+server:
+  port: 10000
 spring:
-  profiles: #环境配置文件
-    active: dev #dev开发环境 prd生产环境
----
-
-spring:
-  profiles: dev
   application:
-    name: test
-
----
-spring:
-  profiles: prd  #上线环境配置
-  application:
-    name: test
-
----
-spring:
-  profiles: dynamic  #多数据源环境配置
-  application:
-    name: test
+    name: complex #应用名字
+  jackson:
+    date-format: yyyy‐MM‐dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://120.27.63.0:3306/monolith?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    username: monolith
+    password: y3whAM3CtdM2W88A
+  redis:
+    database: 0
+    host: 120.27.63.0
+    password: bd9d78
+    port: 6379
+  freemarker:
+    suffix: html
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size: 100MB
+      # 设置总上传的文件大小
+      max-request-size: 200MB

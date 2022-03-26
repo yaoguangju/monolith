@@ -37,11 +37,6 @@
             <artifactId>monolith-common-mp</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.mochen</groupId>-->
-<!--            <artifactId>monolith-common-thread-pool</artifactId>-->
-<!--            <version>1.0-SNAPSHOT</version>-->
-<!--        </dependency>-->
         <!--rocketmq-->
         <dependency>
             <groupId>org.apache.rocketmq</groupId>
@@ -54,6 +49,12 @@
             <artifactId>easyexcel</artifactId>
             <version>3.0.5</version>
         </dependency>
+        <!--quartz依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
