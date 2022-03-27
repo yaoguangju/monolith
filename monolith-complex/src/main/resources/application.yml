@@ -7,10 +7,33 @@ spring:
     date-format: yyyy‐MM‐dd HH:mm:ss
     time-zone: GMT+8
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://120.27.63.0:3306/monolith?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&rewriteBatchedStatements=true
     username: monolith
     password: y3whAM3CtdM2W88A
+    druid:
+      initial-size: 20
+      max-active: 20
+      web-stat-filter:
+        enabled: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: false
+        allow:
+        login-username: root
+        login-password: root
+      filter:
+        stat:
+          enabled: true
+          merge-sql: true
+          slow-sql-millis: 1000
+          log-slow-sql: true
+        wall:
+          enabled: true
+        slf4j:
+          enabled: true
   redis:
     database: 0
     host: 120.27.63.0
@@ -25,3 +48,6 @@ spring:
       max-file-size: 100MB
       # 设置总上传的文件大小
       max-request-size: 200MB
+# spring-boot-starter-quartz整合过，仅仅配置jdbc就能持久化到数据库
+  quartz:
+    job-store-type: jdbc
