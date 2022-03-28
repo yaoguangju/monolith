@@ -13,8 +13,8 @@ spring:
     username: monolith
     password: y3whAM3CtdM2W88A
     druid:
-      initial-size: 20
-      max-active: 20
+      initial-size: 2
+      max-active: 5
       web-stat-filter:
         enabled: true
       stat-view-servlet:
@@ -45,9 +45,22 @@ spring:
   servlet:
     multipart:
       # 单个文件大小
-      max-file-size: 100MB
+      max-file-size: 1000MB
       # 设置总上传的文件大小
-      max-request-size: 200MB
+      max-request-size: 2000MB
 # spring-boot-starter-quartz整合过，仅仅配置jdbc就能持久化到数据库
   quartz:
+    # 参见 org.springframework.boot.autoconfigure.quartz.QuartzProperties
     job-store-type: jdbc
+    wait-for-jobs-to-complete-on-shutdown: true
+    scheduler-name: complex
+    properties:
+      org.quartz.threadPool.threadCount: 5
+      org.quartz.threadPool.threadPriority: 5
+      org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread: true
+      org.quartz.jobStore.misfireThreshold: 5000
+      org.quartz.jobStore.class: org.quartz.impl.jdbcjobstore.JobStoreTX
+      org.quartz.jobStore.driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      # 在调度流程的第一步，也就是拉取待即将触发的triggers时，是上锁的状态，即不会同时存在多个线程拉取到相同的trigger的情况，也就避免的重复调度的危险。参考：https://segmentfault.com/a/1190000015492260
+      org.quartz.jobStore.acquireTriggersWithinLock: true
+
