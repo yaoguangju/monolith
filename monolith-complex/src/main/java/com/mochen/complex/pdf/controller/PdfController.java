@@ -1,4 +1,4 @@
-package com.mochen.complex.web.controller;
+package com.mochen.complex.pdf.controller;
 
 
 import com.itextpdf.text.pdf.PdfReader;
@@ -8,13 +8,11 @@ import com.mochen.core.common.xbo.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -27,16 +25,7 @@ import java.io.IOException;
  */
 @RestController
 @RequestMapping("/complex-web")
-public class ComplexWebController {
-
-    @Resource
-    private IComplexWebStudentService complexWebStudentService;
-
-    @PostMapping("/getStudentList")
-    public Result getStudentList(){
-        SchoolStudentVO schoolStudentVO = complexWebStudentService.getStudentList();
-        return Result.success(schoolStudentVO);
-    }
+public class PdfController {
 
     @GetMapping("/getPdfPage")
     public Result getPdfPage() throws IOException {
