@@ -1,0 +1,39 @@
+server:
+  port: 10000
+spring:
+  application:
+    name: sharding #应用名字
+  jackson:
+    date-format: yyyy‐MM‐dd HH:mm:ss
+    time-zone: GMT+8
+  main:
+    allow-bean-definition-overriding: true
+  shardingsphere:
+    props:
+      sql:
+        show: true
+    datasource:
+      names: d2019,d2020,d2021
+      d2019:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://120.27.63.0:3306/sharding2019?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&rewriteBatchedStatements=true
+        username: root
+        password: 35f3eac33f6f79db
+      d2020:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://120.27.63.0:3306/sharding2020?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&rewriteBatchedStatements=true
+        username: root
+        password: 35f3eac33f6f79db
+      d2021:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://120.27.63.0:3306/sharding2021?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&rewriteBatchedStatements=true
+        username: root
+        password: 35f3eac33f6f79db
+    sharding:
+      default-database-strategy:
+        inline:
+          sharding-column: year
+          algorithm-expression: d$->{year}
