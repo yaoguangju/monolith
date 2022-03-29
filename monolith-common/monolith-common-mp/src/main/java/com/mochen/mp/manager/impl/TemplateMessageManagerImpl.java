@@ -4,7 +4,7 @@ package com.mochen.mp.manager.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mochen.core.exception.CommonException;
-import com.mochen.mp.common.contanst.CommonConstant;
+import com.mochen.mp.common.contanst.MpConstant;
 import com.mochen.mp.manager.TemplateMessageManager;
 import com.mochen.mp.message.WxMpTemplateMessage;
 import org.springframework.http.*;
@@ -23,7 +23,7 @@ public class TemplateMessageManagerImpl implements TemplateMessageManager {
     public boolean sendTemplateMessage(WxMpTemplateMessage wxMpTemplateMessage) throws CommonException {
 
         ResponseEntity<String> accessTokenResponse = restTemplate.exchange(
-                CommonConstant.ACCESS_TOKEN_URL,
+                MpConstant.ACCESS_TOKEN_URL,
                 HttpMethod.GET,
                 null,
                 String.class);
@@ -42,7 +42,7 @@ public class TemplateMessageManagerImpl implements TemplateMessageManager {
         // 发送请求
         String json = JSON.toJSONString(wxMpTemplateMessage);
         ResponseEntity<String> messageResponse = restTemplate.exchange(
-                CommonConstant.TEMPLATE_MESSAGE_URL + "?access_token=" + accessToken,
+                MpConstant.TEMPLATE_MESSAGE_URL + "?access_token=" + accessToken,
                 HttpMethod.POST,
                 entity,
                 String.class);
