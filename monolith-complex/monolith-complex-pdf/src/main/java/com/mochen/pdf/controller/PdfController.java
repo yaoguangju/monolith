@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * <p>
@@ -49,11 +51,12 @@ public class PdfController {
             e.printStackTrace();
         }
         System.out.println("pdf文件的总页数为:" + pageCount);
-        return Result.success();
+        return Result.success(pageCount);
     }
 
-    @PostMapping("/uploadFile")
-    public Result uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping("/uploadFileToOSS")
+    public Result uploadFileToOSS(@RequestParam("file") MultipartFile file) throws IOException {
+        String path = "";
         try {
             OSS ossClient = new OSSClientBuilder().build(CommonConstant.ALI_YUN_OSS_END_POINT,
                     CommonConstant.ALI_YUN_ACCESS_KEY_ID,
@@ -82,16 +85,93 @@ public class PdfController {
             //关闭OssClient
             ossClient.shutdown();
             //上传阿里云之后的文件路径返回
-            log.info("https://" + CommonConstant.ALI_YUN_OSS_BUCKET_NAME + "."+ CommonConstant.ALI_YUN_OSS_END_POINT + "/" + fileName);
+            path = "https://" + CommonConstant.ALI_YUN_OSS_BUCKET_NAME + "."+ CommonConstant.ALI_YUN_OSS_END_POINT + "/" + fileName;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return Result.success(path);
+    }
+
+    @PostMapping("/zipFile")
+    public Result zipFile() throws IOException {
+        //被压缩的文件夹
+        String sourceFile = "/www/wwwroot/file";
+        //压缩结果输出，即压缩包
+        FileOutputStream fos = new FileOutputStream("/www/wwwroot/zip/数印材料卡.zip");
+        ZipOutputStream zipOut = new ZipOutputStream(fos);
+        File fileToZip = new File(sourceFile);
+        //递归压缩文件夹
+        zipFile(fileToZip, fileToZip.getName(), zipOut);
+        //关闭输出流
+        zipOut.close();
+        fos.close();
         return Result.success();
+    }
+
+    @PostMapping("/fileUpload")
+    public boolean fileUpload(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
+        if (file.getSize() == 0) {
+            return false;
+        }
+
+//        System.err.println("文件是否为空 ： " + file.isEmpty());
+//        System.err.println("文件的大小为 ：" + file.getSize());
+//        System.err.println("文件的媒体类型为 ： " + file.getContentType());
+//        System.err.println("文件的名字： " + file.getName());
+//        System.err.println("文件的originName为： " + file.getOriginalFilename());
+
+        File newFile = new File("/www/wwwroot/file/" + file.getOriginalFilename());
+        file.transferTo(newFile);
+        return true;
     }
 
     private static String getFileType(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
+
+    /**
+     * 将fileToZip文件夹及其子目录文件递归压缩到zip文件中
+     * @param fileToZip 递归当前处理对象，可能是文件夹，也可能是文件
+     * @param fileName fileToZip文件或文件夹名称
+     * @param zipOut 压缩文件输出流
+     * @throws IOException
+     */
+    private static void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
+        //不压缩隐藏文件夹
+        if (fileToZip.isHidden()) {
+            return;
+        }
+        //判断压缩对象如果是一个文件夹
+        if (fileToZip.isDirectory()) {
+            if (fileName.endsWith("/")) {
+                //如果文件夹是以“/”结尾，将文件夹作为压缩箱放入zipOut压缩输出流
+                zipOut.putNextEntry(new ZipEntry(fileName));
+                zipOut.closeEntry();
+            } else {
+                //如果文件夹不是以“/”结尾，将文件夹结尾加上“/”之后作为压缩箱放入zipOut压缩输出流
+                zipOut.putNextEntry(new ZipEntry(fileName + "/"));
+                zipOut.closeEntry();
+            }
+            //遍历文件夹子目录，进行递归的zipFile
+            File[] children = fileToZip.listFiles();
+            for (File childFile : children) {
+                zipFile(childFile, fileName + "/" + childFile.getName(), zipOut);
+            }
+            //如果当前递归对象是文件夹，加入ZipEntry之后就返回
+            return;
+        }
+        //如果当前的fileToZip不是一个文件夹，是一个文件，将其以字节码形式压缩到压缩包里面
+        FileInputStream fis = new FileInputStream(fileToZip);
+        ZipEntry zipEntry = new ZipEntry(fileName);
+        zipOut.putNextEntry(zipEntry);
+        byte[] bytes = new byte[1024];
+        int length;
+        while ((length = fis.read(bytes)) >= 0) {
+            zipOut.write(bytes, 0, length);
+        }
+        fis.close();
+    }
+
 
 }
 

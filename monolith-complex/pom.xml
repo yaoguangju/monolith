@@ -21,6 +21,7 @@
         <module>monolith-complex-validation</module>
         <module>monolith-complex-thread</module>
         <module>monolith-complex-web</module>
+        <module>monolith-complex-xxl-job</module>
     </modules>
 
     <properties>
