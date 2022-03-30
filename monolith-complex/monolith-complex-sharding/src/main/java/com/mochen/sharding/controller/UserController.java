@@ -46,6 +46,21 @@ public class UserController {
         return Result.success(list);
     }
 
+    @GetMapping("/getStudentListByAnalysisNo")
+    public Result getStudentListByAnalysisNo(){
+        List<UserDO> list = userService.list(new QueryWrapper<UserDO>().eq("analysis_no","JNN20191201011250").eq("year","2019"));
+        return Result.success(list);
+    }
+
+    @GetMapping("/setStudent")
+    public Result setStudent(){
+        UserDO userDO = new UserDO();
+        userDO.setName("测试添加数据2019");
+        userDO.setYear(2019L);
+        userService.save(userDO);
+        return Result.success();
+    }
+
 
 }
 
