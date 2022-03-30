@@ -37,3 +37,10 @@ spring:
         inline:
           sharding-column: year
           algorithm-expression: d$->{year}
+      tables:
+        user:
+          actual-data-nodes: d2019.user,d2020.user,d2021.user
+          default-database-strategy:
+            standard:
+              sharding-column: year
+

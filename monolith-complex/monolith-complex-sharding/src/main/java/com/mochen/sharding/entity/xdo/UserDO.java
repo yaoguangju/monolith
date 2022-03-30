@@ -70,17 +70,17 @@ public class UserDO implements Serializable {
     @TableField("year")
     private Long year;
 
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private LocalDateTime createTime;
+//    /**
+//     * 创建时间
+//     */
+//    @TableField("create_time")
+//    private LocalDateTime createTime;
 
-    /**
-     * 维护时间
-     */
-    @TableField("update_time")
-    private LocalDateTime updateTime;
+//    /**
+//     * 维护时间
+//     */
+//    @TableField("update_time")
+//    private LocalDateTime updateTime;
 
 
 }

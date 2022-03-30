@@ -39,5 +39,13 @@ public class UserController {
         List<UserDO> list = userService.list(new QueryWrapper<UserDO>().like("name","姚"));
         return Result.success(list);
     }
+
+    @GetMapping("/getStudentListByYear")
+    public Result getStudentListByYear(){
+        List<UserDO> list = userService.list(new QueryWrapper<UserDO>().eq("year","2019").like("name","姚"));
+        return Result.success(list);
+    }
+
+
 }
 
