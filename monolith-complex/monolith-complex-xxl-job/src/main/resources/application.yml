@@ -34,5 +34,16 @@ spring:
           enabled: true
         slf4j:
           enabled: true
-
+xxl:
+  job:
+    admin:
+      addresses: http://192.168.253.130:8080/xxl-job-admin
+    accessToken:
+    executor:
+      appname: xxl-job
+      address:
+      ip:
+      port: 9989
+      logpath: D:\Workspace\Java\monolith\monolith-complex\monolith-complex-xxl-job\src\main\java\com\mochen\xxl\log
+      logretentiondays: 30
 
