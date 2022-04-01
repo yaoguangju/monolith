@@ -42,7 +42,6 @@ public class ContentService {
         for (int i = 0; i < contents.size(); i++) {
             bulkRequest.add(
                     new IndexRequest("jd_goods")
-                            .id(""+(i+1))
                             .source(JSON.toJSONString(contents.get(i)), XContentType.JSON)
             );
         }
