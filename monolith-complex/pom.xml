@@ -23,6 +23,7 @@
         <module>monolith-complex-web</module>
         <module>monolith-complex-xxl-job</module>
         <module>monolith-complex-sharding</module>
+        <module>monolith-complex-elasticSearch</module>
     </modules>
 
     <properties>

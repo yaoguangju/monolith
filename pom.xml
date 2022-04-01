@@ -12,6 +12,7 @@
         <module>monolith-other</module>
         <module>monolith-edudata</module>
         <module>monolith-lams</module>
+        <module>monolith-resource</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
