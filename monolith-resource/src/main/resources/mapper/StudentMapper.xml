@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mochen.resource.mapper.StudentMapper">
+
+    <select id="getStudentInfo" resultType="com.mochen.resource.entity.vo.StudentVO">
+        SELECT
+            st.id as student_id,
+            st.NAME,
+            st.analysis_no,
+            st.id_card,
+            st.YEAR,
+            st.gender,
+            st.student_code,
+            st.avatar,
+            st.create_time,
+            st.update_time,
+            st.school_id,
+            sc.NAME AS school,
+            sc.district_id,
+            d.NAME AS district
+        FROM
+            student st
+                LEFT JOIN school sc ON sc.id = st.school_id
+                LEFT JOIN district d ON sc.district_id = d.id
+        LIMIT #{page},#{limit}
+    </select>
+    <select id="getStudentByMySQL" resultType="com.mochen.resource.entity.vo.StudentVO">
+        SELECT
+            st.id as student_id,
+            st.NAME,
+            st.analysis_no,
+            st.id_card,
+            st.YEAR,
+            st.gender,
+            st.student_code,
+            st.avatar,
+            st.create_time,
+            st.update_time,
+            st.school_id,
+            sc.NAME AS school,
+            sc.district_id,
+            d.NAME AS district
+        FROM
+            student st
+                LEFT JOIN school sc ON sc.id = st.school_id
+                LEFT JOIN district d ON sc.district_id = d.id
+        where st.NAME like concat('%','姚','%')
+        LIMIT 1,5000
+    </select>
+</mapper>
