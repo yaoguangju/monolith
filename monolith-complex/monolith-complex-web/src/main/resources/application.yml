@@ -49,3 +49,7 @@ spring:
       # 设置总上传的文件大小
       max-request-size: 2000MB
 
+customize:
+  jwtSecret: 123312322132112621
+  sm4Key: 1234567890123456
+

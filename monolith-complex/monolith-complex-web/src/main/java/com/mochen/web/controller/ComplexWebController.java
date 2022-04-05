@@ -2,6 +2,7 @@ package com.mochen.web.controller;
 
 
 
+import com.mochen.web.config.CustomizeConfig;
 import com.mochen.web.entity.vo.SchoolStudentVO;
 import com.mochen.web.service.IComplexWebStudentService;
 import com.mochen.core.common.xbo.Result;
@@ -27,12 +28,19 @@ public class ComplexWebController {
     @Resource
     private IComplexWebStudentService complexWebStudentService;
 
+    @Resource
+    private CustomizeConfig customizeConfig;
+
     @PostMapping("/getStudentList")
     public Result getStudentList(){
         SchoolStudentVO schoolStudentVO = complexWebStudentService.getStudentList();
         return Result.success(schoolStudentVO);
     }
 
+    @PostMapping("/getJwtSecret")
+    public Result getJwtSecret(){
+        return Result.success(customizeConfig.getJwtSecret());
+    }
 
 }
 
