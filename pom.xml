@@ -13,6 +13,7 @@
         <module>monolith-edudata</module>
         <module>monolith-lams</module>
         <module>monolith-resource</module>
+        <module>monolith-mp</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
