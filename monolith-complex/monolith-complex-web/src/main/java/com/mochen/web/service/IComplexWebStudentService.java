@@ -4,6 +4,8 @@ import com.mochen.web.entity.vo.SchoolStudentVO;
 import com.mochen.web.entity.xdo.ComplexWebStudentDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Set;
+
 /**
  * <p>
  * 学生 服务类
@@ -15,4 +17,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IComplexWebStudentService extends IService<ComplexWebStudentDO> {
 
     SchoolStudentVO getStudentList();
+
+    Set<Integer> getSchoolList();
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -42,5 +43,10 @@ public class ComplexWebStudentServiceImpl extends ServiceImpl<ComplexWebStudentM
                 .setName("山东省实验中学")
                 .setStudentList(studentList);
         return schoolStudentVO;
+    }
+
+    @Override
+    public Set<Integer> getSchoolList() {
+        return complexWebStudentMapper.getSchoolList();
     }
 }
