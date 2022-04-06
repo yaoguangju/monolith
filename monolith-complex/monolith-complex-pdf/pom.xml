@@ -73,6 +73,12 @@
             <artifactId>tea-openapi</artifactId>
             <version>0.0.19</version>
         </dependency>
+        <!-- jacob -->
+        <dependency>
+            <groupId>com.hynnet</groupId>
+            <artifactId>jacob</artifactId>
+            <version>1.18</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -41,6 +41,7 @@ public class PdfController {
         return Result.success();
     }
 
+
     @PostMapping("/getWordPage")
     public Result getWordPage(@RequestParam("file") MultipartFile file) throws IOException {
         int pageCount = 0;
@@ -95,9 +96,9 @@ public class PdfController {
     @PostMapping("/zipFile")
     public Result zipFile() throws IOException {
         //被压缩的文件夹
-        String sourceFile = "/www/wwwroot/file";
+        String sourceFile = "C:\\Users\\姚广举\\Desktop\\12312_20220402094041\\";
         //压缩结果输出，即压缩包
-        FileOutputStream fos = new FileOutputStream("/www/wwwroot/zip/数印材料卡.zip");
+        FileOutputStream fos = new FileOutputStream("C:\\Users\\姚广举\\Desktop\\数印材料卡.zip");
         ZipOutputStream zipOut = new ZipOutputStream(fos);
         File fileToZip = new File(sourceFile);
         //递归压缩文件夹
