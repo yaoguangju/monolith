@@ -24,6 +24,8 @@
         <module>monolith-complex-xxl-job</module>
         <module>monolith-complex-sharding</module>
         <module>monolith-complex-elasticSearch</module>
+        <module>monolith-complex-mongdb</module>
+        <module>monolith-complex-canal</module>
     </modules>
 
     <properties>
