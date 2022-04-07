@@ -35,7 +35,7 @@ spring:
         slf4j:
           enabled: true
   redis:
-    database: 0
+    database: 10
     host: 120.27.63.0
     password: bd9d78
     port: 6379
