@@ -1,12 +1,19 @@
 package com.mochen.validation.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mochen.validation.entity.dto.ComplexValidationDTO;
 import com.mochen.core.common.xbo.Result;
+import com.mochen.validation.entity.xdo.ComplexValidationDO;
+import com.mochen.validation.mapper.ComplexValidationMapper;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * <p>
@@ -18,18 +25,35 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/complex-validation")
-@Validated
+@Validated // 单个参数或者Path参数校验
 public class ComplexValidationController {
+
+    @Resource
+    private ComplexValidationMapper complexValidationMapper;
 
     /**
      * springboot-2.3后需要单独引入spring-boot-starter-validation组件
      * @param complexValidationDTO
      * @return
      */
-    @PostMapping("/getStudentList")
-    public Result getStudentList(@RequestBody @Valid ComplexValidationDTO complexValidationDTO){
+    @GetMapping("/validationDTO")
+    public Result validationDTO(@RequestBody @Valid ComplexValidationDTO complexValidationDTO){
 
         return Result.success(complexValidationDTO);
+    }
+
+    @GetMapping("/validationPathVariable/year/{year}")
+    public Result validationPathVariable(@PathVariable @Min(2018) Integer year){
+        List<ComplexValidationDO> studentList = complexValidationMapper.selectList(new QueryWrapper<ComplexValidationDO>()
+                .eq("year", year));
+        return Result.success(studentList);
+    }
+
+    @GetMapping("/validationRequestParam")
+    public Result validationRequestParam(@RequestParam @Min(2018) Integer year){
+        List<ComplexValidationDO> studentList = complexValidationMapper.selectList(new QueryWrapper<ComplexValidationDO>()
+                .eq("year", year));
+        return Result.success(studentList);
     }
 }
 
