@@ -1,5 +1,6 @@
 package com.mochen.canal;
 
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.client.CanalConnectors;
@@ -22,14 +23,14 @@ public class SimpleCanalClientExample {
             //TODO 连接
             canalConnector.connect();
             //TODO 订阅数据库
-            canalConnector.subscribe("canal.*");
+            canalConnector.subscribe("resource.user");
             //TODO 获取数据
             Message message = canalConnector.get(100);
             //TODO 获取Entry集合
             List<CanalEntry.Entry> entries = message.getEntries();
             //TODO 判断集合是否为空,如果为空,则等待一会继续拉取数据
             if (entries.size() <= 0) {
-                System.out.println("当次抓取没有数据，休息一会。。。。。。");
+                System.out.println("当次抓取没有数据，休息一会。。。。。。" + DateUtil.now());
                 Thread.sleep(1000);
             } else {
                 //TODO 遍历entries，单条解析
@@ -61,6 +62,8 @@ public class SimpleCanalClientExample {
                             for (CanalEntry.Column column : afterColumnsList) {
                                 afterData.put(column.getName(), column.getValue());
                             }
+
+
 
                             //数据打印
                             System.out.println("Table:" + tableName +
