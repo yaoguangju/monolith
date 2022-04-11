@@ -26,6 +26,7 @@
         <module>monolith-complex-elasticSearch</module>
         <module>monolith-complex-mongdb</module>
         <module>monolith-complex-canal</module>
+        <module>monolith-complex-aspectj</module>
     </modules>
 
     <properties>

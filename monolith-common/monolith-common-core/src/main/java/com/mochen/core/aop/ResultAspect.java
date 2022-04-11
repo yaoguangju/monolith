@@ -26,9 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class ResultAspect {
 
-    @Resource
-    private ControllerExceptionAdvice controllerExceptionAdvice;
-
     /** 换行符 */
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
