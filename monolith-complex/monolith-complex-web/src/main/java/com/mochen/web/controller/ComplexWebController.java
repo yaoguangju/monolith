@@ -2,6 +2,7 @@ package com.mochen.web.controller;
 
 
 
+import com.mochen.log.annotation.SysLog;
 import com.mochen.web.config.CustomizeConfig;
 import com.mochen.web.entity.vo.SchoolStudentVO;
 import com.mochen.web.service.IComplexWebStudentService;
@@ -33,12 +34,14 @@ public class ComplexWebController {
     @Resource
     private CustomizeConfig customizeConfig;
 
+    @SysLog("学生列表")
     @PostMapping("/getStudentList")
     public Result getStudentList(){
         SchoolStudentVO schoolStudentVO = complexWebStudentService.getStudentList();
         return Result.success(schoolStudentVO);
     }
 
+    @SysLog("学校列表")
     @GetMapping("/getSchoolList")
     public Result getSchoolList(){
         Set<Integer> complexWebStudentDOSet = complexWebStudentService.getSchoolList();

@@ -21,6 +21,7 @@
         <module>monolith-common-sms</module>
         <module>monolith-common-utils</module>
         <module>monolith-common-mp</module>
+        <module>monolith-common-log</module>
     </modules>
 
     <properties>
