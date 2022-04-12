@@ -27,6 +27,7 @@
         <module>monolith-complex-mongdb</module>
         <module>monolith-complex-canal</module>
         <module>monolith-complex-aspectj</module>
+        <module>monolith-complex-kafka</module>
     </modules>
 
     <properties>
