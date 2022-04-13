@@ -1,12 +1,10 @@
 package com.mochen.edudata.data.service.impl;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.mochen.edudata.common.datasource.DatasourceManager;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mochen.edudata.data.entity.xdo.BaseStudentDO;
 import com.mochen.edudata.data.mapper.BaseStudentMapper;
 import com.mochen.edudata.data.service.IBaseStudentService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mochen.edudata.major.entity.xdo.UserDO;
 import com.mochen.edudata.major.mapper.UserMapper;
 import com.mochen.redis.common.manager.RedisManager;

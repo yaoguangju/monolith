@@ -1,7 +1,7 @@
 package com.mochen.validation.service;
 
-import com.mochen.validation.entity.xdo.ComplexValidationDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mochen.validation.entity.xdo.ComplexValidationDO;
 
 /**
  * <p>

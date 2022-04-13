@@ -1,7 +1,7 @@
 package com.mochen.thread.service;
 
-import com.mochen.thread.entity.xdo.ComplexConcurrentDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mochen.thread.entity.xdo.ComplexConcurrentDO;
 
 /**
  * <p>

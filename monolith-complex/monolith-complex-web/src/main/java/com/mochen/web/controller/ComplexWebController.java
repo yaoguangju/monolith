@@ -1,16 +1,14 @@
 package com.mochen.web.controller;
 
 
-
+import com.mochen.core.common.xbo.Result;
 import com.mochen.log.annotation.SysLog;
 import com.mochen.web.config.CustomizeConfig;
 import com.mochen.web.entity.vo.SchoolStudentVO;
 import com.mochen.web.service.IComplexWebStudentService;
-import com.mochen.core.common.xbo.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -46,6 +44,12 @@ public class ComplexWebController {
     public Result getSchoolList(){
         Set<Integer> complexWebStudentDOSet = complexWebStudentService.getSchoolList();
         return Result.success(complexWebStudentDOSet);
+    }
+
+    @SysLog("学校列表")
+    @GetMapping("/getLogEx")
+    public Result getLogEx() throws Exception {
+        throw new Exception("1111");
     }
 
     @PostMapping("/getJwtSecret")

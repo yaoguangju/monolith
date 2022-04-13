@@ -1,19 +1,13 @@
 package com.mochen.thread.controller;
 
 
-import com.mochen.thread.service.IComplexConcurrentService;
 import com.mochen.core.common.xbo.Result;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import com.mochen.thread.service.IComplexConcurrentService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import javax.annotation.Resource;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
 
 
 /**

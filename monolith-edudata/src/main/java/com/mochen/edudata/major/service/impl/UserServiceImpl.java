@@ -2,14 +2,14 @@ package com.mochen.edudata.major.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mochen.core.exception.CommonException;
-import com.mochen.redis.common.manager.RedisManager;
+import com.mochen.edudata.common.security.JwtManager;
+import com.mochen.edudata.common.security.LoginUser;
 import com.mochen.edudata.major.entity.dto.LoginDTO;
 import com.mochen.edudata.major.entity.vo.LoginVO;
 import com.mochen.edudata.major.entity.xdo.UserDO;
 import com.mochen.edudata.major.mapper.UserMapper;
-import com.mochen.edudata.common.security.JwtManager;
-import com.mochen.edudata.common.security.LoginUser;
 import com.mochen.edudata.major.service.IUserService;
+import com.mochen.redis.common.manager.RedisManager;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

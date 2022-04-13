@@ -2,8 +2,8 @@ package com.mochen.validation.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.mochen.validation.entity.dto.ComplexValidationDTO;
 import com.mochen.core.common.xbo.Result;
+import com.mochen.validation.entity.dto.ComplexValidationDTO;
 import com.mochen.validation.entity.xdo.ComplexValidationDO;
 import com.mochen.validation.mapper.ComplexValidationMapper;
 import org.springframework.validation.annotation.Validated;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**

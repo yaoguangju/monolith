@@ -1,11 +1,7 @@
 package com.mochen.edudata.three.controller;
 
-import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.crypto.SmUtil;
-import cn.hutool.crypto.symmetric.SymmetricCrypto;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.mochen.core.common.xbo.Result;
-import com.mochen.edudata.common.config.CustomizeConfig;
 import com.mochen.edudata.common.datasource.DynamicDatasourceManager;
 import com.mochen.edudata.common.utils.Sm4Utils;
 import com.mochen.edudata.major.entity.xdo.StudentDO;

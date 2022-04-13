@@ -1,9 +1,9 @@
 package com.mochen.web.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mochen.web.entity.xdo.ComplexWebSchoolDO;
 import com.mochen.web.mapper.ComplexWebSchoolMapper;
 import com.mochen.web.service.IComplexWebSchoolService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

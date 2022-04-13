@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import java.util.function.Consumer;
 
 /**
  * 操作日志使用spring event异步入库
@@ -112,7 +111,7 @@ public class SysLogAspect {
      */
     @AfterThrowing(pointcut = "sysLogAspect()", throwing = "e")
     public void doAfterThrowable(Throwable e) {
-        OptLogDTO sysLog = new OptLogDTO();
+        OptLogDTO sysLog = get();
         sysLog.setType("EX");
         // 异常对象
         sysLog.setExDetail(LogUtil.getStackTrace(e));

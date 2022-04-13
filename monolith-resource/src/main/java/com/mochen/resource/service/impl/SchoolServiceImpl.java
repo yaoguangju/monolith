@@ -1,9 +1,9 @@
 package com.mochen.resource.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mochen.resource.entity.xdo.SchoolDO;
 import com.mochen.resource.mapper.SchoolMapper;
 import com.mochen.resource.service.ISchoolService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

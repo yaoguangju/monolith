@@ -1,7 +1,7 @@
 package com.mochen.sharding.service;
 
-import com.mochen.sharding.entity.xdo.UserDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mochen.sharding.entity.xdo.UserDO;
 
 import java.util.List;
 

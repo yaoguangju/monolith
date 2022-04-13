@@ -1,7 +1,7 @@
 package com.mochen.web.service;
 
-import com.mochen.web.entity.xdo.ComplexWebSchoolDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mochen.web.entity.xdo.ComplexWebSchoolDO;
 
 /**
  * <p>

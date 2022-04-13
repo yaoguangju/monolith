@@ -7,7 +7,7 @@ spring:
     date-format: yyyy‐MM‐dd HH:mm:ss
     time-zone: GMT+8
   kafka:
-    bootstrap-servers: 192.168.253.130:9092  #bootstrap-servers：连接kafka的地址，多个地址用逗号分隔
+    bootstrap-servers: 127.0.0.1:9092  #bootstrap-servers：连接kafka的地址，多个地址用逗号分隔
     consumer:
       group-id: myGroup
       enable-auto-commit: true

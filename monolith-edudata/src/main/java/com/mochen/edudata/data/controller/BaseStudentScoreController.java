@@ -6,12 +6,9 @@ import com.mochen.edudata.data.service.IBaseStudentScoreService;
 import com.mochen.edudata.data.service.IBaseStudentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * <p>

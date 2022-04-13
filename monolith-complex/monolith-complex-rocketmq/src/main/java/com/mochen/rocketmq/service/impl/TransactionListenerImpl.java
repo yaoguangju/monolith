@@ -3,8 +3,6 @@ package com.mochen.rocketmq.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.mochen.rocketmq.entity.xdo.ComplexRocketmqOrderDO;
 import com.mochen.rocketmq.mapper.ComplexRocketmqOrderMapper;
-import com.mochen.rocketmq.entity.xdo.ComplexRocketmqOrderDO;
-import com.mochen.rocketmq.mapper.ComplexRocketmqOrderMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.rocketmq.client.producer.LocalTransactionState;

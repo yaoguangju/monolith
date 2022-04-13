@@ -1,7 +1,7 @@
 package com.mochen.validation.mapper;
 
-import com.mochen.validation.entity.xdo.ComplexValidationDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mochen.validation.entity.xdo.ComplexValidationDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

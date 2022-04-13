@@ -2,8 +2,6 @@ package com.mochen.resource.entity.vo;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class StudentVO {
 

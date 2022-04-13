@@ -1,7 +1,7 @@
 package com.mochen.web.mapper;
 
-import com.mochen.web.entity.xdo.ComplexWebSchoolDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mochen.web.entity.xdo.ComplexWebSchoolDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

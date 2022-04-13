@@ -1,7 +1,7 @@
 package com.mochen.resource.mapper;
 
-import com.mochen.resource.entity.xdo.UserDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mochen.resource.entity.xdo.UserDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

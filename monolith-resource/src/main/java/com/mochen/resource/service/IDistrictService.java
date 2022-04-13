@@ -1,7 +1,7 @@
 package com.mochen.resource.service;
 
-import com.mochen.resource.entity.xdo.DistrictDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mochen.resource.entity.xdo.DistrictDO;
 
 /**
  * <p>

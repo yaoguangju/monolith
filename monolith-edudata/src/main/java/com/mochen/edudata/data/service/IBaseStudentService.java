@@ -1,7 +1,7 @@
 package com.mochen.edudata.data.service;
 
-import com.mochen.edudata.data.entity.xdo.BaseStudentDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mochen.edudata.data.entity.xdo.BaseStudentDO;
 
 /**
  * <p>

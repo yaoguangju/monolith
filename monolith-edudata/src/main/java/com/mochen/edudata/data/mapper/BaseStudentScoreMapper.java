@@ -1,7 +1,7 @@
 package com.mochen.edudata.data.mapper;
 
-import com.mochen.edudata.data.entity.xdo.BaseStudentScoreDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mochen.edudata.data.entity.xdo.BaseStudentScoreDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

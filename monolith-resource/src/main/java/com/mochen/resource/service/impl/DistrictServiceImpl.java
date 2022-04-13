@@ -1,9 +1,9 @@
 package com.mochen.resource.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mochen.resource.entity.xdo.DistrictDO;
 import com.mochen.resource.mapper.DistrictMapper;
 import com.mochen.resource.service.IDistrictService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
