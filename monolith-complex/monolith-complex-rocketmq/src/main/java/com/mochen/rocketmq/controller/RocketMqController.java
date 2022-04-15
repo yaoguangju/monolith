@@ -1,17 +1,19 @@
 package com.mochen.rocketmq.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.mochen.rocketmq.entity.xdo.ComplexRocketmqOrderDO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
-import org.apache.rocketmq.client.producer.TransactionSendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+
 
 @RestController
 @RequestMapping("/rocketmq")
@@ -78,6 +80,20 @@ public class RocketMqController {
     @GetMapping("/sendOneWayMsg")
     public void sendOneWayMsg() {
         rocketMQTemplate.sendOneWay("topic1:tag1", MessageBuilder.withPayload("单向消息").build());
+    }
+
+    /**
+     * 发送事务消息
+     */
+    @GetMapping("/sendTransactionMessage")
+    public void sendTransactionMessage(){
+        // 设置下订单的消息
+        ComplexRocketmqOrderDO complexRocketmqOrderDO = new ComplexRocketmqOrderDO();
+        complexRocketmqOrderDO.setCommodityId(1L);
+        complexRocketmqOrderDO.setCommodityAmount(10L);
+        // 将消息转换为消息头
+        Message<String> msg = MessageBuilder.withPayload(JSON.toJSONString(complexRocketmqOrderDO)).build();
+        rocketMQTemplate.sendMessageInTransaction("transaction-rocketmq",msg,null);
     }
 
 }

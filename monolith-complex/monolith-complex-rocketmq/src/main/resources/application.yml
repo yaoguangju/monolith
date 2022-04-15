@@ -34,18 +34,11 @@ spring:
           enabled: true
         slf4j:
           enabled: true
-  redis:
-    database: 0
-    host: 120.27.63.0
-    password: bd9d78
-    port: 6379
-  freemarker:
-    suffix: html
-  # 文件上传
-  servlet:
-    multipart:
-      # 单个文件大小
-      max-file-size: 1000MB
-      # 设置总上传的文件大小
-      max-request-size: 2000MB
 
+rocketmq:
+  name-server: 192.168.253.130:9876 # 访问地址
+  producer:
+    group: Pro_Group # 必须指定group
+    send-message-timeout: 3000 # 消息发送超时时长，默认3s
+    retry-times-when-send-failed: 3 # 同步发送消息失败重试次数，默认2
+    retry-times-when-send-async-failed: 3 # 异步发送消息失败重试次数，默认2

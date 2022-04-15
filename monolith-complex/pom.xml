@@ -28,7 +28,7 @@
         <module>monolith-complex-canal</module>
         <module>monolith-complex-aspectj</module>
         <module>monolith-complex-kafka</module>
-        <module>monolith-complex-rocketmq-starter</module>
+        <module>monolith-complex-rocketmq</module>
     </modules>
 
     <properties>
