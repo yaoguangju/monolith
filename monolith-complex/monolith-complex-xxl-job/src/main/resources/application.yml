@@ -37,7 +37,7 @@ spring:
 xxl:
   job:
     admin:
-      addresses: http://192.168.253.130:8080/xxl-job-admin
+      addresses: http://120.27.63.0:8080/xxl-job-admin
     accessToken:
     executor:
       appname: xxl-job

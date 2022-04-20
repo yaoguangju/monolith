@@ -1,0 +1,12 @@
+server:
+  port: 10000
+spring:
+  application:
+    name: sentinel #应用名字
+  jackson:
+    date-format: yyyy‐MM‐dd HH:mm:ss
+    time-zone: GMT+8
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:9100

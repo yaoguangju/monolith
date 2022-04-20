@@ -29,6 +29,7 @@
         <module>monolith-complex-aspectj</module>
         <module>monolith-complex-kafka</module>
         <module>monolith-complex-rocketmq</module>
+        <module>monolith-complex-sentinel</module>
     </modules>
 
     <properties>
