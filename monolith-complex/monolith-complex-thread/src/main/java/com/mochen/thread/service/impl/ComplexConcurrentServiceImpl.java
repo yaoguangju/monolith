@@ -26,13 +26,12 @@ public class ComplexConcurrentServiceImpl extends ServiceImpl<ComplexConcurrentM
     private ComplexConcurrentMapper complexConcurrentMapper;
 
     @Resource
-    @Qualifier("asyncServiceExecutor")
-    private Executor executor;
+    private Executor asyncServiceExecutor;
 
     @Override
 //    @Async("asyncServiceExecutor")
     public void setStudent() {
-        executor.execute(new Runnable() {
+        asyncServiceExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 Thread t = Thread.currentThread();

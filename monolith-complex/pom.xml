@@ -30,6 +30,7 @@
         <module>monolith-complex-kafka</module>
         <module>monolith-complex-rocketmq</module>
         <module>monolith-complex-sentinel</module>
+        <module>monolith-complex-version</module>
     </modules>
 
     <properties>
