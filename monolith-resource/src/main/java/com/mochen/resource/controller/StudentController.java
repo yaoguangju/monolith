@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mochen.core.common.xbo.Result;
 import com.mochen.resource.entity.vo.StudentVO;
 import com.mochen.resource.mapper.StudentMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -42,6 +44,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @RequestMapping("/student")
+@Slf4j
 public class StudentController {
 
     @Resource
@@ -51,24 +54,27 @@ public class StudentController {
     private RestHighLevelClient restHighLevelClient;
 
     @GetMapping("/pushStudentToElasticSearch")
-    public Result pushStudentToElasticSearch() throws IOException {
+    public Result pushStudentToElasticSearch() throws InterruptedException {
 
 //        Integer page = 0;
         Integer limit = 10000;
         Integer count = studentMapper.selectCount(null);
+        System.out.println(count);
         //计算
         int size = count / limit;
         int last = count % limit;
+        System.out.println(size);
+        System.out.println(last > 0 ? size + 1: size);
 
 
         CountDownLatch countDownLatch = new CountDownLatch(last > 0 ? size + 1: size);
 
 
 
-        List<StudentVO> studentVOSList = new ArrayList<>();
+        List<StudentVO> studentVOSList = new CopyOnWriteArrayList<>();
 
 
-        for (int i = 0; i <= size; i++) {
+        for (int i = 0; i < size; i++) {
             int finalI = i;
             Thread thread = new Thread(() -> {
                 List<StudentVO> studentVOList = studentMapper.getStudentInfo(finalI * limit, limit);
@@ -85,30 +91,22 @@ public class StudentController {
             });
             thread.start();
         }
+        countDownLatch.await();
 
 
+//        // 获取内容
+//        // 内容放入 es 中
+//        BulkRequest bulkRequest = new BulkRequest();
+//        bulkRequest.timeout("2m"); // 可更具实际业务是指
+//        for (int i = 0; i < studentVOSList.size(); i++) {
+//            bulkRequest.add(
+//                    new IndexRequest("student")
+//                            .source(JSON.toJSONString(studentVOSList.get(i)), XContentType.JSON)
+//            );
+//        }
+//        restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
 
-
-
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // 获取内容
-        // 内容放入 es 中
-        BulkRequest bulkRequest = new BulkRequest();
-        bulkRequest.timeout("2m"); // 可更具实际业务是指
-        for (int i = 0; i < studentVOSList.size(); i++) {
-            bulkRequest.add(
-                    new IndexRequest("student")
-                            .source(JSON.toJSONString(studentVOSList.get(i)), XContentType.JSON)
-            );
-        }
-        restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
-
-        return Result.success();
+        return Result.success(studentVOSList.size());
     }
 
     @GetMapping("/getStudentByMySQL")

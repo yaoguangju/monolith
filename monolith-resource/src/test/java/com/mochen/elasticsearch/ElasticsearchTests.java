@@ -22,4 +22,6 @@ public class ElasticsearchTests {
 //        System.out.println(response.status()); // OK
 //        restHighLevelClient.close();
     }
+
+
 }
