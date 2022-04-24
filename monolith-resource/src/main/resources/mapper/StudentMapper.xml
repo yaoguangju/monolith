@@ -47,4 +47,26 @@
         where st.NAME like concat('%','姚','%')
         LIMIT 1,5000
     </select>
+    <select id="getStudentVoById" resultType="com.mochen.resource.entity.vo.StudentVO">
+        SELECT
+            st.id as student_id,
+            st.NAME,
+            st.analysis_no,
+            st.id_card,
+            st.YEAR,
+            st.gender,
+            st.student_code,
+            st.avatar,
+            st.create_time,
+            st.update_time,
+            st.school_id,
+            sc.NAME AS school,
+            sc.district_id,
+            d.NAME AS district
+        FROM
+            student st
+                LEFT JOIN school sc ON sc.id = st.school_id
+                LEFT JOIN district d ON sc.district_id = d.id
+        WHERE st.id = #{id}
+    </select>
 </mapper>

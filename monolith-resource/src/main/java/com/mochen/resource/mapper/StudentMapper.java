@@ -22,4 +22,6 @@ public interface StudentMapper extends BaseMapper<StudentDO> {
     List<StudentVO> getStudentInfo(Integer page, Integer limit);
 
     List<StudentVO> getStudentByMySQL();
+
+    StudentVO getStudentVoById(Long studentId);
 }
