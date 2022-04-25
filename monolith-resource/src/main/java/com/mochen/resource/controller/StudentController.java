@@ -60,13 +60,12 @@ public class StudentController {
     @Resource
     private StudentMapper studentMapper;
 
-    @Autowired
+    @Resource
     private RestHighLevelClient restHighLevelClient;
 
     @GetMapping("/pushStudentToElasticSearch")
     public Result pushStudentToElasticSearch() throws InterruptedException, IOException {
 
-//        Integer page = 0;
         Integer limit = 10000;
         Integer count = studentMapper.selectCount(null);
         System.out.println(count);
@@ -85,6 +84,9 @@ public class StudentController {
             int finalI = i;
             Thread thread = new Thread(() -> {
                 List<StudentVO> studentVOList = studentMapper.getStudentInfo(finalI * limit, limit);
+                for (StudentVO studentVO : studentVOList) {
+                    studentVO.setSuggestion(Arrays.asList(studentVO.getName(),studentVO.getSchool()));
+                }
                 studentVOSList.addAll(studentVOList);
                 countDownLatch.countDown();
             });
@@ -93,6 +95,9 @@ public class StudentController {
         if (last > 0) {
             Thread thread = new Thread(() -> {
                 List<StudentVO> studentVOList = studentMapper.getStudentInfo(limit * size, last);
+                for (StudentVO studentVO : studentVOList) {
+                    studentVO.setSuggestion(Arrays.asList(studentVO.getName(),studentVO.getSchool()));
+                }
                 studentVOSList.addAll(studentVOList);
                 countDownLatch.countDown();
             });
@@ -100,68 +105,13 @@ public class StudentController {
         }
         countDownLatch.await();
 
-
-//        // 获取内容
-//        // 内容放入 es 中
+        // 获取内容
+        // 内容放入 es 中
         BulkRequest bulkRequest = new BulkRequest();
         bulkRequest.timeout("2m"); // 可更具实际业务是指
         for (int i = 0; i < studentVOSList.size(); i++) {
             bulkRequest.add(
                     new IndexRequest("student")
-                            .source(JSON.toJSONString(studentVOSList.get(i)), XContentType.JSON)
-            );
-        }
-        restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
-
-        return Result.success(studentVOSList.size());
-    }
-
-
-    @GetMapping("/pushStudentToElasticSearchSuggestion")
-    public Result pushStudentToElasticSearchSuggestion() throws InterruptedException, IOException {
-
-        Integer limit = 10000;
-        Integer count = studentMapper.selectCount(null);
-        System.out.println(count);
-        //计算
-        int size = count / limit;
-        int last = count % limit;
-        System.out.println(size);
-        System.out.println(last > 0 ? size + 1: size);
-
-
-        CountDownLatch countDownLatch = new CountDownLatch(last > 0 ? size + 1: size);
-
-        List<StudentVO> studentVOSList = new CopyOnWriteArrayList<>();
-
-        for (int i = 0; i < size; i++) {
-            int finalI = i;
-            Thread thread = new Thread(() -> {
-                List<StudentVO> studentVOList = studentMapper.getStudentInfo(finalI * limit, limit);
-                studentVOSList.addAll(studentVOList);
-                countDownLatch.countDown();
-            });
-            thread.start();
-        }
-        if (last > 0) {
-            Thread thread = new Thread(() -> {
-                List<StudentVO> studentVOList = studentMapper.getStudentInfo(limit * size, last);
-                studentVOSList.addAll(studentVOList);
-                countDownLatch.countDown();
-            });
-            thread.start();
-        }
-        countDownLatch.await();
-
-
-//        // 获取内容
-//        // 内容放入 es 中
-        BulkRequest bulkRequest = new BulkRequest();
-        bulkRequest.timeout("2m"); // 可更具实际业务是指
-        for (int i = 0; i < studentVOSList.size(); i++) {
-            bulkRequest.add(
-                    new IndexRequest("student_completion")
-                            .type("Completion")
                             .source(JSON.toJSONString(studentVOSList.get(i)), XContentType.JSON)
             );
         }
@@ -209,47 +159,6 @@ public class StudentController {
         return Result.success(studentVOList);
     }
 
-    @GetMapping("/getStudentByEsHighlight")
-    public Result getStudentByEsHighlight() throws IOException {
-        SearchRequest request = new SearchRequest("student");
-        // 创建搜索源建造者对象
-        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-
-        // 条件采用：高亮查询 通过keyword查字段name
-        TermsQueryBuilder termsQueryBuilder = QueryBuilders.termsQuery("name","姚");
-        sourceBuilder.query(termsQueryBuilder);
-        //构建高亮字段
-        HighlightBuilder highlightBuilder = new HighlightBuilder();
-        highlightBuilder.preTags("<font color='red'>");//设置标签前缀
-        highlightBuilder.postTags("</font>");//设置标签后缀
-        highlightBuilder.field("name");//设置高亮字段
-        //设置高亮构建对象
-        sourceBuilder.highlighter(highlightBuilder);
-        //设置请求体
-        request.source(sourceBuilder);
-
-        // 执行查询，返回结果
-        SearchResponse searchResponse = restHighLevelClient.search(request, RequestOptions.DEFAULT);
-        // 解析结果
-        SearchHits hits = searchResponse.getHits();
-
-        System.out.println("took::"+searchResponse.getTook());
-        System.out.println("time_out::"+searchResponse.isTimedOut());
-        System.out.println("total::"+hits.getTotalHits());
-        System.out.println("max_score::"+hits.getMaxScore());
-        System.out.println("hits::::>>");
-
-        for (SearchHit hit : hits) {
-            String sourceAsString = hit.getSourceAsString();
-            System.out.println(sourceAsString);
-            //打印高亮结果
-            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-            System.out.println(highlightFields);
-        }
-        System.out.println("<<::::");
-        return Result.success();
-    }
-
     @GetMapping("suggestion")
     public List<String> getSuggestions(@RequestParam("key") String prefix) {
 
@@ -259,10 +168,10 @@ public class StudentController {
             // 2.准备DSL
             request.source().suggest(new SuggestBuilder().addSuggestion(
                     "suggestions",
-                    SuggestBuilders.completionSuggestion("name")
+                    SuggestBuilders.completionSuggestion("suggestion")
                             .prefix(prefix)
                             .skipDuplicates(true)
-                            .size(10)
+                            .size(1000)
             ));
             // 3.发起请求
             SearchResponse response = restHighLevelClient.search(request, RequestOptions.DEFAULT);

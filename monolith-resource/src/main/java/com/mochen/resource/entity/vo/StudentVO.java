@@ -2,6 +2,8 @@ package com.mochen.resource.entity.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class StudentVO {
 
@@ -19,4 +21,5 @@ public class StudentVO {
     private String avatar;
     private String createTime;
     private String updateTime;
+    private List<String> suggestion;
 }

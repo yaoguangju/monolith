@@ -37,12 +37,13 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class CanalServiceImpl implements ICanalService {
 
-    @Autowired
+    @Resource
     public RestHighLevelClient restHighLevelClient;
 
     @Resource
@@ -121,6 +122,7 @@ public class CanalServiceImpl implements ICanalService {
 
                                         UpdateRequest request = new UpdateRequest("student", documentFields.getId());
                                         StudentVO studentVO = studentMapper.getStudentVoById(Long.valueOf(studentId));
+                                        studentVO.setSuggestion(Arrays.asList(studentVO.getName(),studentVO.getSchool()));
                                         request.doc(JSON.toJSONString(studentVO), XContentType.JSON);
                                         UpdateResponse response = restHighLevelClient.update(request, RequestOptions.DEFAULT);
                                         System.out.println(response.status());
@@ -129,7 +131,7 @@ public class CanalServiceImpl implements ICanalService {
                                 }else if (eventType.toString().equals("INSERT")){
                                     String studentId = afterData.get("id").toString();
                                     StudentVO studentVO = studentMapper.getStudentVoById(Long.valueOf(studentId));
-
+                                    studentVO.setSuggestion(Arrays.asList(studentVO.getName(),studentVO.getSchool()));
                                     BulkRequest bulkRequest = new BulkRequest();
                                     bulkRequest.timeout("2m"); // 可更具实际业务是指
                                     bulkRequest.add(
