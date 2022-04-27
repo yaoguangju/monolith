@@ -138,7 +138,7 @@ public class StudentController {
         searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));// 60s
         // 分页
         searchSourceBuilder.from(1);
-        searchSourceBuilder.size(5000);
+        searchSourceBuilder.size(500);
 
         // 搜索源放入搜索请求中
         student.source(searchSourceBuilder);

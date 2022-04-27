@@ -52,7 +52,8 @@ public class CanalServiceImpl implements ICanalService {
     @Override
     public void synchronousData() throws IOException {
         //TODO 获取连接
-        CanalConnector canalConnector = CanalConnectors.newSingleConnector(new InetSocketAddress("127.0.0.1", 11111), "example", "", "");
+        CanalConnector canalConnector = CanalConnectors.newSingleConnector(new
+                InetSocketAddress("127.0.0.1", 11111), "example", "", "");
         while (true) {
             //TODO 连接
             canalConnector.connect();
