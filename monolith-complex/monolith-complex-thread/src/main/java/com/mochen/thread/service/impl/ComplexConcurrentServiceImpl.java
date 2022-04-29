@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mochen.thread.entity.xdo.ComplexConcurrentDO;
 import com.mochen.thread.mapper.ComplexConcurrentMapper;
 import com.mochen.thread.service.IComplexConcurrentService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

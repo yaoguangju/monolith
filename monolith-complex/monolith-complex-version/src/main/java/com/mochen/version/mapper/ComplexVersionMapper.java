@@ -1,7 +1,7 @@
 package com.mochen.version.mapper;
 
-import com.mochen.version.entity.xdo.ComplexVersionDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mochen.version.entity.xdo.ComplexVersionDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
