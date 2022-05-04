@@ -20,7 +20,7 @@ public class SpringInitRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.info("项目初始化时启动。。");
-        canalService.synchronousData();
+//        canalService.synchronousData();
     }
 
 }

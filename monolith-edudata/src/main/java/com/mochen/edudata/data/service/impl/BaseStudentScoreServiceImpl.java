@@ -22,9 +22,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
@@ -45,6 +43,9 @@ public class BaseStudentScoreServiceImpl extends ServiceImpl<BaseStudentScoreMap
     @Resource
     private BaseStudentMapper baseStudentMapper;
 
+    @Resource
+    private Executor asyncServiceExecutor;
+
     @Override
     public void cacheStudentScore() throws InterruptedException {
         DynamicDataSourceContextHolder.push(DatasourceManager.getDatasource("2019"));
@@ -58,7 +59,8 @@ public class BaseStudentScoreServiceImpl extends ServiceImpl<BaseStudentScoreMap
         CountDownLatch countDownLatch = new CountDownLatch(9);
 
         List<String> stringList = new ArrayList<>(9);
-        String basePath = "D:\\Cache\\百度网盘\\BaiduNetdiskWorkspace\\2021年7月份高二期末考试数据\\01 数据\\单科原始成绩\\";
+//        String basePath = "D:\\Cache\\百度网盘\\BaiduNetdiskWorkspace\\2021年7月份高二期末考试数据\\01 数据\\单科原始成绩\\";
+        String basePath = "D:\\Cache\\百度网盘同步空间\\同步空间\\2021年7月份高二期末考试数据\\01 数据\\单科原始成绩\\";
         stringList.add(0, basePath + "单科原始成绩_高中语文.xls");
         stringList.add(1, basePath + "单科原始成绩_高中数学.xls");
         stringList.add(2, basePath + "单科原始成绩_高中英语.xls");
@@ -70,75 +72,64 @@ public class BaseStudentScoreServiceImpl extends ServiceImpl<BaseStudentScoreMap
         stringList.add(8, basePath + "单科原始成绩_高中地理.xls");
 
         for (int i = 0; i < 9; i++) {
+
             int j = i;
-            pool.execute(() -> {
-                try{
-                    //获取上传文件输入流
-                    EasyExcel.read(stringList.get(j), EasyExcelData.class, new ReadListener<EasyExcelData>() {
+            CompletableFuture.runAsync(() -> {
+                //获取上传文件输入流
+                EasyExcel.read(stringList.get(j), EasyExcelData.class, new ReadListener<EasyExcelData>() {
 
-                        /**
-                         * 单次缓存的数据量
-                         */
-                        public static final int BATCH_COUNT = 1000;
+                    /**
+                     * 单次缓存的数据量
+                     */
+                    public static final int BATCH_COUNT = 1000;
 
-                        /**
-                         *临时存储
-                         */
-                        private List<BaseStudentScoreDO> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-
-                        @Override
-                        public void invoke(EasyExcelData easyExcelData, AnalysisContext analysisContext) {
+                    /**
+                     *临时存储
+                     */
+                    private List<BaseStudentScoreDO> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+                    @Override
+                    public void invoke(EasyExcelData easyExcelData, AnalysisContext analysisContext) {
 
 //                              log.info("解析到一条数据:{}", JSON.toJSONString(easyExcelData));
-                            BaseStudentScoreDO baseStudentScoreDO = new BaseStudentScoreDO();
-
-                            BeanUtils.copyProperties(easyExcelData,baseStudentScoreDO);
-                            baseStudentScoreDO.setSubjectId(j + 1);
-                            baseStudentScoreDO.setExamId(1L);
-                            baseStudentScoreDO.setStudentId(map.get(easyExcelData.getAnalysisNo()));
-
-
-                            cachedDataList.add(baseStudentScoreDO);
-                            if (cachedDataList.size() >= BATCH_COUNT) {
-                                saveData();
-                                // 存储完成清理 list
-                                cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-                            }
-                        }
-
-                        /**
-                         * 在转换异常 获取其他异常下会调用本接口。抛出异常则停止读取。如果这里不抛出异常则 继续读取下一行。
-                         */
-                        @Override
-                        public void onException(Exception exception, AnalysisContext context) {
-                            log.error("解析失败，但是继续解析下一行:{}", exception.getMessage());
-                        }
-
-                        @Override
-                        public void doAfterAllAnalysed(AnalysisContext analysisContext) {
+                        BaseStudentScoreDO baseStudentScoreDO = new BaseStudentScoreDO();
+                        BeanUtils.copyProperties(easyExcelData,baseStudentScoreDO);
+                        baseStudentScoreDO.setSubjectId(j + 1);
+                        baseStudentScoreDO.setExamId(1L);
+                        baseStudentScoreDO.setStudentId(map.get(easyExcelData.getAnalysisNo()));
+                        cachedDataList.add(baseStudentScoreDO);
+                        if (cachedDataList.size() >= BATCH_COUNT) {
                             saveData();
+                            // 存储完成清理 list
+                            cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
                         }
+                    }
 
-                        /**
-                         * 加上存储数据库
-                         */
-                        private void saveData() {
-                            log.info("{}数据", cachedDataList);
-                            DynamicDataSourceContextHolder.push(DatasourceManager.getDatasource("2019"));
-                            baseStudentScoreService.saveBatch(cachedDataList);
-                            log.info("存储数据库成功！");
-                        }
-                    }).sheet().headRowNumber(4).doRead();
-                    // 配置sheet，配置从第几行开始读
+                    /**
+                     * 在转换异常 获取其他异常下会调用本接口。抛出异常则停止读取。如果这里不抛出异常则 继续读取下一行。
+                     */
+                    @Override
+                    public void onException(Exception exception, AnalysisContext context) {
+                        log.error("解析失败，但是继续解析下一行:{}", exception.getMessage());
+                    }
 
+                    @Override
+                    public void doAfterAllAnalysed(AnalysisContext analysisContext) {
+                        saveData();
+                    }
 
-                }catch (Exception ignored){
+                    /**
+                     * 加上存储数据库
+                     */
+                    private void saveData() {
+                        log.info("{}数据", cachedDataList);
+                        DynamicDataSourceContextHolder.push(DatasourceManager.getDatasource("2019"));
+                        baseStudentScoreService.saveBatch(cachedDataList);
+                        log.info("存储数据库成功！");
+                    }
+                }).sheet().headRowNumber(4).doRead();
+                // 配置sheet，配置从第几行开始读
 
-                }finally {
-                    countDownLatch.countDown();
-                }
-            });
+            },asyncServiceExecutor).join();
         }
-        countDownLatch.await();
     }
 }

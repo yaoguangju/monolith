@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>monolith-complex-mongdb</artifactId>
+    <artifactId>monolith-complex-mongodb</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

@@ -27,7 +27,7 @@ public class ThreadPoolConfig implements AsyncConfigurer {
     /**
      * 线程池配置
      */
-    @Bean("asyncServiceExecutor")
+    @Bean()
     public Executor asyncServiceExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         // 配置核心线程池数量

@@ -24,6 +24,7 @@ import org.elasticsearch.search.suggest.Suggest;
 import org.elasticsearch.search.suggest.SuggestBuilder;
 import org.elasticsearch.search.suggest.SuggestBuilders;
 import org.elasticsearch.search.suggest.completion.CompletionSuggestion;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,9 +36,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -59,60 +59,39 @@ public class StudentController {
     @Resource
     private RestHighLevelClient restHighLevelClient;
 
+    @Resource
+    private Executor asyncServiceExecutor;
+
     @GetMapping("/pushStudentToElasticSearch")
-    public Result pushStudentToElasticSearch() throws InterruptedException, IOException {
+    public Result pushStudentToElasticSearch() throws IOException {
 
         Integer limit = 10000;
         Integer count = studentMapper.selectCount(null);
-        System.out.println(count);
-        //计算
         int size = count / limit;
-        int last = count % limit;
-        System.out.println(size);
-        System.out.println(last > 0 ? size + 1: size);
-
-
-        CountDownLatch countDownLatch = new CountDownLatch(last > 0 ? size + 1: size);
-
         List<StudentVO> studentVOSList = new CopyOnWriteArrayList<>();
-
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i <= size; i++) {
             int finalI = i;
-            Thread thread = new Thread(() -> {
-                List<StudentVO> studentVOList = studentMapper.getStudentInfo(finalI * limit, limit);
-                for (StudentVO studentVO : studentVOList) {
-                    studentVO.setSuggestion(Arrays.asList(studentVO.getName(),studentVO.getSchool()));
-                }
+            CompletableFuture.runAsync(() -> {
+                List<StudentVO> studentVOList = studentMapper.getStudentInfo(finalI * limit, limit)
+                        .parallelStream()
+                        .map(studentVO -> {
+                            StudentVO studentVONew = new StudentVO();
+                            BeanUtils.copyProperties(studentVO, studentVONew);
+                            studentVONew.setSuggestion(Arrays.asList(studentVO.getName(),studentVO.getSchool()));
+                            return studentVONew;
+                        }).collect(Collectors.toList());
                 studentVOSList.addAll(studentVOList);
-                countDownLatch.countDown();
-            });
-            thread.start();
+            },asyncServiceExecutor).join();
         }
-        if (last > 0) {
-            Thread thread = new Thread(() -> {
-                List<StudentVO> studentVOList = studentMapper.getStudentInfo(limit * size, last);
-                for (StudentVO studentVO : studentVOList) {
-                    studentVO.setSuggestion(Arrays.asList(studentVO.getName(),studentVO.getSchool()));
-                }
-                studentVOSList.addAll(studentVOList);
-                countDownLatch.countDown();
-            });
-            thread.start();
-        }
-        countDownLatch.await();
-
-        // 获取内容
         // 内容放入 es 中
         BulkRequest bulkRequest = new BulkRequest();
         bulkRequest.timeout("2m"); // 可更具实际业务是指
-        for (int i = 0; i < studentVOSList.size(); i++) {
+        for (StudentVO studentVO : studentVOSList) {
             bulkRequest.add(
-                    new IndexRequest("student")
-                            .source(JSON.toJSONString(studentVOSList.get(i)), XContentType.JSON)
+                    new IndexRequest("student").source(JSON.toJSONString(studentVO), XContentType.JSON)
             );
         }
         restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
-
         return Result.success(studentVOSList.size());
     }
 
