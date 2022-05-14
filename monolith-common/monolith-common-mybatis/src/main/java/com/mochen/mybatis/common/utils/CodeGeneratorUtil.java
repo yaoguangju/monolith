@@ -17,7 +17,7 @@ public class CodeGeneratorUtil {
      * 全局配置
      */
     public static GlobalConfig globalConfig() {
-        String outputDir = new File(System.getProperty("user.dir")) + "/monolith-complex/monolith-complex-version/src/main/java";
+        String outputDir = new File(System.getProperty("user.dir")) + "/monolith-complex/monolith-complex-jsoup/src/main/java";
         return new GlobalConfig.Builder()
                 .author("姚广举")
                 .dateType(DateType.TIME_PACK)
@@ -43,7 +43,7 @@ public class CodeGeneratorUtil {
      * 数据库连接
      */
     public static DataSourceConfig dataSourceConfig() {
-        return new DataSourceConfig.Builder("jdbc:mysql://120.27.63.0:3306/monolith?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8", "root", "35f3eac33f6f79db")
+        return new DataSourceConfig.Builder("jdbc:mysql://120.27.63.0:3306/jsoup?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8", "root", "35f3eac33f6f79db")
                 .typeConvert(new MySqlTypeConvert(){
                     @Override
                     public DbColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType){
@@ -66,9 +66,9 @@ public class CodeGeneratorUtil {
     public static PackageConfig packageConfig() {
         return new PackageConfig.Builder()
                 .parent("com.mochen")
-                .moduleName("version")
+                .moduleName("jsoup")
                 .entity("entity.xdo")
-                .pathInfo(Collections.singletonMap(OutputFile.mapperXml, new File(System.getProperty("user.dir")) + "/monolith-complex/monolith-complex-version/src/main/resources/mapper"))
+                .pathInfo(Collections.singletonMap(OutputFile.mapperXml, new File(System.getProperty("user.dir")) + "/monolith-complex/monolith-complex-jsoup/src/main/resources/mapper"))
                 .build();
 
     }

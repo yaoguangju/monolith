@@ -2,9 +2,7 @@ server:
   port: 10000
 spring:
   application:
-    name: elasticSearch #应用名字
+    name: alibaba #应用名字
   jackson:
     date-format: yyyy‐MM‐dd HH:mm:ss
     time-zone: GMT+8
-
-

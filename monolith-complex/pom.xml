@@ -31,6 +31,8 @@
         <module>monolith-complex-rocketmq</module>
         <module>monolith-complex-sentinel</module>
         <module>monolith-complex-version</module>
+        <module>monolith-complex-alibaba</module>
+        <module>monolith-complex-jsoup</module>
     </modules>
 
     <properties>

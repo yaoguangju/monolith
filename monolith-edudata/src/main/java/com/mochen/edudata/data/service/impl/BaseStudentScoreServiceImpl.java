@@ -55,9 +55,6 @@ public class BaseStudentScoreServiceImpl extends ServiceImpl<BaseStudentScoreMap
                 .stream()
                 .collect(Collectors.toMap(BaseStudentDO::getAnalysisNo, BaseStudentDO::getId));
 
-        ExecutorService pool = Executors.newFixedThreadPool(9);
-        CountDownLatch countDownLatch = new CountDownLatch(9);
-
         List<String> stringList = new ArrayList<>(9);
 //        String basePath = "D:\\Cache\\百度网盘\\BaiduNetdiskWorkspace\\2021年7月份高二期末考试数据\\01 数据\\单科原始成绩\\";
         String basePath = "D:\\Cache\\百度网盘同步空间\\同步空间\\2021年7月份高二期末考试数据\\01 数据\\单科原始成绩\\";
@@ -77,12 +74,10 @@ public class BaseStudentScoreServiceImpl extends ServiceImpl<BaseStudentScoreMap
             CompletableFuture.runAsync(() -> {
                 //获取上传文件输入流
                 EasyExcel.read(stringList.get(j), EasyExcelData.class, new ReadListener<EasyExcelData>() {
-
                     /**
                      * 单次缓存的数据量
                      */
                     public static final int BATCH_COUNT = 1000;
-
                     /**
                      *临时存储
                      */

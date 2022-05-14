@@ -3,6 +3,7 @@ package com.mochen.web.controller;
 
 import com.mochen.core.common.xbo.Result;
 import com.mochen.log.annotation.SysLog;
+import com.mochen.redis.common.manager.RedisManager;
 import com.mochen.web.config.CustomizeConfig;
 import com.mochen.web.entity.vo.SchoolStudentVO;
 import com.mochen.web.service.IComplexWebStudentService;
@@ -32,6 +33,9 @@ public class ComplexWebController {
     @Resource
     private CustomizeConfig customizeConfig;
 
+    @Resource
+    private RedisManager redisManager;
+
     @SysLog("学生列表")
     @PostMapping("/getStudentList")
     public Result getStudentList(){
@@ -55,6 +59,12 @@ public class ComplexWebController {
     @PostMapping("/getJwtSecret")
     public Result getJwtSecret(){
         return Result.success(customizeConfig.getJwtSecret());
+    }
+
+    @GetMapping("/testRedis")
+    public Result testRedis(){
+        redisManager.setCacheObject("小明","已消费");
+        return Result.success();
     }
 
 }
