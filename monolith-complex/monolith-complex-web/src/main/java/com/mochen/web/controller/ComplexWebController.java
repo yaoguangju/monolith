@@ -1,18 +1,20 @@
 package com.mochen.web.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mochen.core.common.xbo.Result;
 import com.mochen.log.annotation.SysLog;
 import com.mochen.redis.common.manager.RedisManager;
 import com.mochen.web.config.CustomizeConfig;
 import com.mochen.web.entity.vo.SchoolStudentVO;
+import com.mochen.web.entity.xdo.ComplexWebStudentDO;
+import com.mochen.web.mapper.ComplexWebStudentMapper;
 import com.mochen.web.service.IComplexWebStudentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,6 +37,9 @@ public class ComplexWebController {
 
     @Resource
     private RedisManager redisManager;
+
+    @Autowired
+    private ComplexWebStudentMapper complexWebStudentMapper;
 
     @SysLog("学生列表")
     @PostMapping("/getStudentList")
@@ -65,6 +70,16 @@ public class ComplexWebController {
     public Result testRedis(){
         redisManager.setCacheObject("小明","已消费");
         return Result.success();
+    }
+
+    @PostMapping("/getStudent")
+    public Result getStudent(@RequestParam String schoolId,
+                             @RequestParam String year){
+        List<ComplexWebStudentDO> complexWebStudentDOList = complexWebStudentMapper.selectList(new QueryWrapper<ComplexWebStudentDO>()
+                .lambda()
+                .eq(ComplexWebStudentDO::getSchoolId,schoolId)
+                .eq(ComplexWebStudentDO::getYear,year));
+        return Result.success(complexWebStudentDOList);
     }
 
 }

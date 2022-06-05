@@ -32,8 +32,6 @@ public class ComplexValidationController {
 
     /**
      * springboot-2.3后需要单独引入spring-boot-starter-validation组件
-     * @param complexValidationDTO
-     * @return
      */
     @GetMapping("/validationDTO")
     public Result validationDTO(@RequestBody @Valid ComplexValidationDTO complexValidationDTO){
