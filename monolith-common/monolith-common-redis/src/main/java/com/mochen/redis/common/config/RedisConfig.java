@@ -1,5 +1,13 @@
 package com.mochen.redis.common.config;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mochen.redis.common.utils.FastJsonRedisSerializer;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -7,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
@@ -27,40 +36,27 @@ public class RedisConfig extends CachingConfigurerSupport
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
 
-        FastJsonRedisSerializer serializer = new FastJsonRedisSerializer(Object.class);
+        Jackson2JsonRedisSerializer<Object> objectJackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        // 解决jackson2无法反序列化LocalDateTime的问题
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL);
+        objectJackson2JsonRedisSerializer.setObjectMapper(objectMapper);
 
         // 设置key值序列化
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         // 设置value序列化
-        redisTemplate.setValueSerializer(serializer);
+        redisTemplate.setValueSerializer(objectJackson2JsonRedisSerializer);
 
         // Hash的key和value的序列化
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(serializer);
+        redisTemplate.setHashValueSerializer(objectJackson2JsonRedisSerializer);
 
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
-
-//    @Bean
-//    public RedisTemplate<Object,Object> redisTemplate(RedisConnectionFactory factory){
-//        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
-//        redisTemplate.setConnectionFactory(factory);
-//        // 使用Jackson2JsonRedisSerialize 替换默认序列化
-//        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        //忽略任何值为null的属性
-//        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-//        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
-//        // 设置key和value的序列化规则
-//        redisTemplate.setKeySerializer(new StringRedisSerializer());
-//        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-//        // 设置hashKey和hashValue的序列化规则
-//        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-//        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
-//        //afterPropertiesSet和init-method之间的执行顺序是afterPropertiesSet 先执行，init-method 后执行。
-//        redisTemplate.afterPropertiesSet();
-//        return redisTemplate;
-//
-//    }
 }

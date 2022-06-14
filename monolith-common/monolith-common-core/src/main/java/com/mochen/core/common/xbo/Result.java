@@ -17,7 +17,6 @@ public class Result extends HashMap<String, Object> {
      * 初始化一个新创建的 AjaxResult 对象，使其表示一个空消息。
      */
     public Result() {
-
     }
 
     /**
