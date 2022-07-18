@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="monolith-complex-sentinel" />
+        <module name="monolith-complex-easyexcel" />
+        <module name="monolith-complex-sharding" />
+        <module name="monolith-common-sms" />
+        <module name="monolith-complex-web" />
+        <module name="monolith-leetcode" />
+        <module name="monolith-complex-thread" />
+        <module name="monolith-complex-jsoup" />
+        <module name="monolith-complex-validation" />
+        <module name="monolith-complex-quartz" />
+        <module name="monolith-common-mybatis" />
+        <module name="monolith-complex-elasticSearch" />
+        <module name="monolith-common-core" />
+        <module name="monolith-common-redis" />
+        <module name="monolith-complex-kafka" />
+        <module name="monolith-jvm" />
+        <module name="monolith-mp" />
+        <module name="monolith-complex-rocketmq" />
+        <module name="monolith-other" />
+        <module name="monolith-complex-lock" />
+        <module name="monolith-complex-aspectj" />
+        <module name="monolith-lams" />
+        <module name="monolith-complex-pdf" />
+        <module name="monolith-common-log" />
+        <module name="monolith-complex-mongodb" />
+        <module name="monolith-common-mp" />
+        <module name="monolith-complex-swagger" />
+        <module name="monolith-design" />
+        <module name="monolith-complex-version" />
+        <module name="monolith-resource" />
+        <module name="monolith-complex-mp" />
+        <module name="monolith-complex-canal" />
+        <module name="monolith-complex-alibaba" />
+        <module name="monolith-thread" />
+        <module name="monolith-edudata" />
+        <module name="monolith-complex-xxl-job" />
+        <module name="monolith-common-utils" />
+        <module name="monolith-common-file" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="monolith-common-core" options="-parameters" />
+      <module name="monolith-common-file" options="-parameters" />
+      <module name="monolith-common-log" options="-parameters" />
+      <module name="monolith-common-mp" options="-parameters" />
+      <module name="monolith-common-mybatis" options="-parameters" />
+      <module name="monolith-common-redis" options="-parameters" />
+      <module name="monolith-common-sms" options="-parameters" />
+      <module name="monolith-common-utils" options="-parameters" />
+      <module name="monolith-complex-alibaba" options="-parameters" />
+      <module name="monolith-complex-aspectj" options="-parameters" />
+      <module name="monolith-complex-canal" options="-parameters" />
+      <module name="monolith-complex-easyexcel" options="-parameters" />
+      <module name="monolith-complex-elasticSearch" options="-parameters" />
+      <module name="monolith-complex-jsoup" options="-parameters" />
+      <module name="monolith-complex-kafka" options="-parameters" />
+      <module name="monolith-complex-lock" options="-parameters" />
+      <module name="monolith-complex-mongodb" options="-parameters" />
+      <module name="monolith-complex-mp" options="-parameters" />
+      <module name="monolith-complex-pdf" options="-parameters" />
+      <module name="monolith-complex-quartz" options="-parameters" />
+      <module name="monolith-complex-rocketmq" options="-parameters" />
+      <module name="monolith-complex-sentinel" options="-parameters" />
+      <module name="monolith-complex-sharding" options="-parameters" />
+      <module name="monolith-complex-swagger" options="-parameters" />
+      <module name="monolith-complex-thread" options="-parameters" />
+      <module name="monolith-complex-validation" options="-parameters" />
+      <module name="monolith-complex-version" options="-parameters" />
+      <module name="monolith-complex-web" options="-parameters" />
+      <module name="monolith-complex-xxl-job" options="-parameters" />
+      <module name="monolith-design" options="-parameters" />
+      <module name="monolith-edudata" options="-parameters" />
+      <module name="monolith-jvm" options="-parameters" />
+      <module name="monolith-lams" options="-parameters" />
+      <module name="monolith-leetcode" options="-parameters" />
+      <module name="monolith-mp" options="-parameters" />
+      <module name="monolith-other" options="-parameters" />
+      <module name="monolith-resource" options="-parameters" />
+      <module name="monolith-thread" options="-parameters" />
+    </option>
+  </component>
+</project>

@@ -33,6 +33,7 @@
         <module>monolith-complex-version</module>
         <module>monolith-complex-alibaba</module>
         <module>monolith-complex-jsoup</module>
+        <module>monolith-complex-swagger</module>
     </modules>
 
     <properties>
