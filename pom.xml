@@ -15,6 +15,7 @@
         <module>monolith-resource</module>
         <module>monolith-mp</module>
         <module>monolith-design</module>
+        <module>monolith-utils</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
